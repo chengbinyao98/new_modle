@@ -34,7 +34,7 @@ class Main2(object):
         success = []
 
 
-        for episode in range(50):
+        for episode in range(1200):
             print('episode',episode)
             epi.append(episode)
 
