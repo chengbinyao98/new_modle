@@ -19,7 +19,7 @@ class Env1(object):
         self.road_length = 200          # 道路长度
         self.straight = 100             # 基站和道路的直线距离
         self.car_length = 5
-        self.max_speed = 105            # km/h
+        self.max_speed = 105 * 0.277777778            # km/h
 
         # 存储单元
         self.cars_posit = 0  # 车辆的位置
@@ -40,7 +40,7 @@ class Env1(object):
 
         # 同一个时段不用变化
         self.s_point1 = 0                                                       # 车速范围
-        self.s_point2 = 20*0.277777778
+        self.s_point2 = 20 * 0.277777778
         self.d_point1 = 4                                                       # 车间距范围
         self.d_point2 = 10
         safe_dis = 4                                                            # 安全距离
@@ -109,7 +109,8 @@ class Env1(object):
         self.cars_speed = self.log_zhengtai(self.s_mu, self.s_sigma, self.s_point1, self.s_point2)[0]
         self.cars_posit = self.log_zhengtai(self.d_mu, self.d_sigma, self.s_point1, self.s_point2)[0]
         # 形成状态
-        state = [0,0]
+        a = self.get_section(self.cars_posit)
+        state = [a,a]
         return state
 
     def step(self, action, state):

@@ -67,8 +67,8 @@ if __name__ == '__main__':
                             add = []
                             b = []
                             for k in range(2):
-                                s = temp // int(math.ceil(env.road_range/env.action_section))  # 商
-                                y = temp % int(math.ceil(env.road_range/env.action_section))  # 余数
+                                s = temp // math.ceil(env.road_range/env.action_section)  # 商
+                                y = temp % math.ceil(env.road_range/env.action_section) # 余数
                                 b = b + [y]
                                 temp = s
                             b.reverse()
@@ -81,12 +81,12 @@ if __name__ == '__main__':
                                 action.append(env.cars_posit[dic_state[2][num][dim][2]] - env.road_range / 2 + add[dim] * env.action_section)
                             dic_action[2].append(action)
 
-                draw_action = [0 for l in range(len(env.cars_posit))]
-                for x in dic_state:
-                    for num in range(len(dic_state[x])):
-                        for dim in range(len(dic_state[x][num])):
-                            draw_action[dic_state[x][num][dim][2]] = dic_action[x][num][dim]
-                draw.piant(env.cars_posit,env.road_range,ax1,env.frame_slot,draw_action)
+                # draw_action = [0 for l in range(len(env.cars_posit))]
+                # for x in dic_state:
+                #     for num in range(len(dic_state[x])):
+                #         for dim in range(len(dic_state[x][num])):
+                #             draw_action[dic_state[x][num][dim][2]] = dic_action[x][num][dim]
+                # draw.piant(env.cars_posit,env.road_range,ax1,env.frame_slot,draw_action)
 
                 dic_state_, dic_reward = env.step(dic_action, tools)
                 print(dic_reward)

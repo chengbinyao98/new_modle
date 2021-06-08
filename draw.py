@@ -7,7 +7,7 @@ class DRAW(object):
     def piant(self,pos,road_range,ax,frame_slot, action):
         road_length = 200
         straight = 100
-        ann_num = 16
+        ann_num = 32
 
         plt.sca(ax)
         ax.cla()

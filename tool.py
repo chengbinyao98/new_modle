@@ -87,7 +87,7 @@ class Tools(object):
         a = {}
         for x in dic_a:
             if x not in a:
-                a[x] = [[[0 for m in range(4)] for p in range(len(dic_a[x][0]))] for q in range(len(dic_a[x]))]
+                a[x] = [[[0 for m in range(3)] for p in range(len(dic_a[x][0]))] for q in range(len(dic_a[x]))]
             for i in range(len(dic_a[x])):
                 for j in range(len(dic_a[x][i])):
                     a[x][i][j][0] = dic_a[x][i][j]

@@ -19,7 +19,7 @@ class Env2(object):
         self.road_length = 200          # 道路长度
         self.straight = 100             # 基站和道路的直线距离
         self.car_length = 5
-        self.max_speed = 105
+        self.max_speed = 105 * 0.277777778
 
         # 存储单元
         self.cars_posit = []  # 车辆的位置（连续）
@@ -41,7 +41,7 @@ class Env2(object):
 
         # 同一个时段不用变化
         self.s_point1 = 0  # 车速范围
-        self.s_point2 = 20*0.277777778
+        self.s_point2 = 20 * 0.277777778
         self.d_point1 = 4  # 车间距范围
         self.d_point2 = 10
         safe_dis = 4  # 安全距离
@@ -276,7 +276,7 @@ class Env2(object):
         now = self.get_section(self.cars_posit)
         state_ = []
         for i in range(n):
-            state_.append([action[i],now[i],state[i][1]])
+            state_.append([now[i],state[i][0]])
 
         if self.cars_posit[n-1] > self.road_length:
             done = 1

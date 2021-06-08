@@ -20,7 +20,7 @@ class Env(object):
         self.road_length = 200          # 道路长度
         self.straight = 100             # 基站和道路的直线距离
         self.car_length = 5
-        self.max_speed = 105
+        self.max_speed = 105 * 0.277777778
 
         # 存储单元
         self.cars_posit = []            # 车辆的位置（连续）
@@ -42,7 +42,7 @@ class Env(object):
 
         # 同一个时段不用变化
         self.s_point1 = 0                                                   # 车速范围
-        self.s_point2 = 20*0.277777778
+        self.s_point2 = 20 * 0.277777778
         self.d_point1 = 4                                                   # 车间距范围
         self.d_point2 = 10
         safe_dis = 4  # 安全距离
@@ -95,14 +95,12 @@ class Env(object):
         for i in range(len(self.cars_posit)):
             self.cars_posit[i] = self.cars_speed[i] * self.frame_slot + self.cars_posit[i]
 
-
-    def get_information(self, action, section):
+    def get_information(self,section):
         for i in range(10):  # 这个10随便，只要保证能新加上所有的车辆即可
             # 生成一个新的车辆进入，初始化车辆间距
             dis1 = self.log_zhengtai(self.d_mu, self.d_sigma, self.s_point1, self.s_point2)[0]
             dis2 = self.log_zhengtai(self.d_mu, self.d_sigma, self.s_point1, self.s_point2)[0]
             if self.cars_posit[0] >= dis1 + dis2:
-                action.insert(0, (self.cars_posit[0] - dis1) / self.road_section)
                 section.insert(0, (self.cars_posit[0] - dis1) / self.road_section)
                 self.cars_posit.insert(0, (self.cars_posit[0] - dis1))  # 车辆的位置（位置更新）
                 self.cars_speed.insert(0, self.cars_speed[0])  # 车辆的速度（位置更新）
@@ -111,13 +109,12 @@ class Env(object):
         for i in range(10):
             # 将超出道路的车辆排除
             if self.cars_posit[len(self.cars_posit) - 1] > self.road_length:
-                del action[len(self.cars_posit) - 1]
                 del section[len(self.cars_posit) - 1]
                 del self.cars_speed[len(self.cars_posit) - 1]
                 del self.cars_posit[len(self.cars_posit) - 1]
             else:
                 break
-        return action, section
+        return section
 
     def get_reward(self, list_act, list_reward, tool):
         info = tool.get_info(self.cars_posit, self.no_interference)
@@ -192,7 +189,7 @@ class Env(object):
             reward = self.get_reward(action, reward, tool)
         dic_reward = tool.classify(reward, info)
 
-        action, change_next_section = self.get_information(action, section)
+        change_next_section = self.get_information(section)
 
         next_info = tool.get_info(self.cars_posit, self.no_interference)  # 下一时刻的道路信息
 
@@ -204,30 +201,6 @@ class Env(object):
 
         return dic_state_, dic_reward
 
-    def draw(self):
 
-        plt.ion()  # 开启交互模式
-        plt.figure(figsize=(100, 3))  # 设置画布大小
-
-        # 数据
-        y = []
-        for i in range(len(self.cars_posit)):
-            y.append(0)
-
-        for j in range(1000):
-            plt.clf()  # 清空画布
-            plt.axis([0, 210, 0, 0.1])  # 坐标轴范围
-            x_major_locator = MultipleLocator(5)  # 把x轴的刻度间隔设置为1，并存在变量里
-            ax = plt.gca()  # ax为两条坐标轴的实例
-            ax.xaxis.set_major_locator(x_major_locator)  # 把x轴的主刻度设置为1的倍数
-            plt.tick_params(axis='both', which='major', labelsize=5)  # 坐标轴字体大小
-
-            self.road_step()
-
-            plt.scatter(self.cars_posit, y, marker="o")  # 画图数据
-            plt.pause(0.2)
-
-        plt.ioff()
-        plt.show()
 
 
