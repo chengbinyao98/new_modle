@@ -50,10 +50,6 @@
 # # plt.title("所求的截断对数正态分布")
 # plt.show()
 
-
-
-
-
 import numpy as np
 from pylab import *
 from scipy import stats
@@ -88,105 +84,192 @@ def trunc_exp_rv(scale, low, high, data_num=10000): # scale是均值不是lamda�
     print(rnd_cdf)
     return stats.expon.ppf(q=rnd_cdf, scale=scale)
 
-# s_mu1, s_sigma1 = 2.5, 0.25
-# s_mu2, s_sigma2 = 3.7, 0.25
-# s_mu3, s_sigma3 = 3.98, 0.15
-# s_mu4, s_sigma4 = 4.35, 0.05
-# s_point1 = 0
-# s_point2 = 20
-# s_point3 = 40
-# s_point4 = 60
-# s_point5 = 80
-
-# km1 = road_length / (car_length + 4)
-# km2 = road_length / (car_length + 10)
-# km3 = math.ceil(road_length / (car_length + 30))
-# km4 = math.ceil(road_length / (car_length + 60))
-# print(km1,km2,km3,km4)
-
-# distance
-# mean1 = math.exp(s_mu1 + s_sigma1 * s_sigma1 / 2)
-# k1 = km1 / math.exp(mean1 / max_speed)
-# distance1 = road_length / k1 - car_length
-# d_sigma1 = 0.05
-# d_mu1 = math.log(distance1) - d_sigma1 * d_sigma1 / 2
-# print(distance1)
-#
-# mean2 = math.exp(s_mu2 + s_sigma2 * s_sigma2 / 2)
-# k2 = km2 - km2 * mean2 / max_speed
-# distance2 = road_length / k2 - car_length
-# d_sigma2 = 0.5
-# d_mu2 = math.log(distance2) - d_sigma2 * d_sigma2 / 2
-# print(distance2)
-#
-# mean3 = math.exp(s_mu3 + s_sigma3 * s_sigma3 / 2)
-# k3 = math.ceil(km3 - km3 * mean3 / max_speed)
-# distance3 = road_length / k3 - car_length
-# d_sigma3 = 0.4
-# d_mu3 = math.log(distance3) - d_sigma3 * d_sigma3 / 2
-# print(distance3)
-#
-# mean4 = math.exp(s_mu4 + s_sigma4 * s_sigma4 / 2)
-# k4 = math.ceil(-math.log(mean4 / max_speed) * km4)
-# distance4 = road_length / k4 - car_length
-# print(distance4)
 
 
-# d_point1 = 4
-# d_point2 = 10
-# d_point3 = 30
-# d_point4 = 60
-# d_point5 = 100
+s_point1 = 60 * 0.277777778
+s_point2 = 80 * 0.277777778
 
-s_mu1 = 2.5
-s_mu2 = 1
-s_mu3 = 1
-s_mu4 = 1
-s_mu5 = 1
-s_mu6 = 1
+d_point1 = 60
+d_point2 = 100
 
-s_sigma1 = 0.25
-s_sigma2 = 0.1
-s_sigma3 = 0.2
-s_sigma4 = 0.8
-s_sigma5 = 1.2
-s_sigma6 =2
-
-s_point1 = 0
-s_point2 = 20 * 0.277777778
-
-d_sigma = 0.05
-d_point1 = 4
-d_point2 = 10
-
-safe_dis = 4  # 安全距离
+safe_dis = 60  # 安全距离
 km = road_length / (car_length + safe_dis)                # 由安全距离计算最大车辆密度
-mean = math.exp(s_mu1 + s_sigma1 * s_sigma1 / 2)        # 由交通流理论计算车辆间距
-k = km / math.exp(mean / max_speed)
-distance = road_length / k - car_length
-d_mu = math.log(distance) - d_sigma * d_sigma / 2
 
 
-# log_data1 = get_trunc_lognorm(s_mu1, s_sigma1, s_point1, s_point2)
-# plt.hist(log_data1, density=True, bins=100,alpha=0.7)
-# log_data2 = get_trunc_lognorm(s_mu2, s_sigma2, s_point1, s_point2)
-# plt.hist(log_data2, density=True, bins=100,alpha=0.7)
-# log_data3 = get_trunc_lognorm(s_mu3, s_sigma3, s_point1, s_point2)
-# plt.hist(log_data3, density=True, bins=100,alpha=0.7)
-# log_data4 = get_trunc_lognorm(s_mu4, s_sigma4, s_point1, s_point2)
-# plt.hist(log_data4, density=True, bins=100,alpha=0.7)
-# log_data5 = get_trunc_lognorm(s_mu5, s_sigma5, s_point1, s_point2)
-# plt.hist(log_data5, density=True, bins=100,alpha=0.7)
-# log_data6 = get_trunc_lognorm(s_mu6, s_sigma6, s_point1, s_point2)
-# plt.hist(log_data6, density=True, bins=100,alpha=0.7)
+
+s_mu1 = 0.5
+s_mu2 = 2
+s_mu3 = 3
+s_mu4 = 4.5
+s_mu5 = 7
+
+s_sigma1 = 0.01
+s_sigma2 = 0.02
+s_sigma3 = 0.05
+s_sigma4 = 0.25
+
+d_sigma1 = 0.02
+d_sigma2 = 0.05
+d_sigma3 = 0.1
+d_sigma4 = 10
+
+# # s_mu变化图
+# s_sigma = s_sigma4
+# d_sigma = d_sigma4
 #
+# log_data1 = get_trunc_lognorm(s_mu1, s_sigma, s_point1, s_point2)
+# plt.hist(log_data1, density=True, bins=100,alpha=0.7)
+# log_data2 = get_trunc_lognorm(s_mu2, s_sigma, s_point1, s_point2)
+# plt.hist(log_data2, density=True, bins=100,alpha=0.7)
+# log_data3 = get_trunc_lognorm(s_mu3, s_sigma, s_point1, s_point2)
+# plt.hist(log_data3, density=True, bins=100,alpha=0.7)
+# log_data4 = get_trunc_lognorm(s_mu4, s_sigma, s_point1, s_point2)
+# plt.hist(log_data4, density=True, bins=100,alpha=0.7)
+# log_data5 = get_trunc_lognorm(s_mu5, s_sigma, s_point1, s_point2)
+# plt.hist(log_data5, density=True, bins=100,alpha=0.7)
 # plt.title("speed")
 # plt.show()
 
 
-log_data1 = get_trunc_lognorm(d_mu, d_sigma, d_point1, d_point2)
+
+# s_sigma变化图
+s_mu = s_mu3
+d_sigma = d_sigma4
+
+log_data1 = get_trunc_lognorm(s_mu, s_sigma1, s_point1, s_point2)
 plt.hist(log_data1, density=True, bins=100,alpha=0.7)
-
-
-plt.title("distance")
+log_data2 = get_trunc_lognorm(s_mu, s_sigma2, s_point1, s_point2)
+plt.hist(log_data2, density=True, bins=100,alpha=0.7)
+log_data3 = get_trunc_lognorm(s_mu, s_sigma3, s_point1, s_point2)
+plt.hist(log_data3, density=True, bins=100,alpha=0.7)
+log_data4 = get_trunc_lognorm(s_mu, s_sigma4, s_point1, s_point2)
+plt.hist(log_data4, density=True, bins=100,alpha=0.7)
+plt.title("speed")
 plt.show()
+
+
+
+
+
+
+
+# # s_mu变化引起的d_mu变化，此时s_sigma = s_sigma3 = 0.25。d_sigma = d_sigma4 = 2
+# s_sigma = s_sigma4
+# d_sigma = d_sigma4
+#
+# mean1 = math.exp(s_mu1 + s_sigma * s_sigma / 2)        # 由交通流理论计算车辆间距
+# k1 = km / math.exp(mean1 / max_speed)
+# distance1 = road_length / k1 - car_length
+# d_mu1 = math.log(distance1) - d_sigma * d_sigma / 2
+#
+# mean2 = math.exp(s_mu2 + s_sigma * s_sigma / 2)        # 由交通流理论计算车辆间距
+# k2 = km / math.exp(mean2 / max_speed)
+# distance2 = road_length / k2 - car_length
+# d_mu2 = math.log(distance2) - d_sigma * d_sigma / 2
+#
+# mean3 = math.exp(s_mu3 + s_sigma * s_sigma / 2)        # 由交通流理论计算车辆间距
+# k3 = km / math.exp(mean3 / max_speed)
+# distance3 = road_length / k3 - car_length
+# d_mu3 = math.log(distance3) - d_sigma * d_sigma / 2
+#
+# mean4 = math.exp(s_mu4 + s_sigma * s_sigma / 2)        # 由交通流理论计算车辆间距
+# k4 = km / math.exp(mean4 / max_speed)
+# distance4 = road_length / k4 - car_length
+# d_mu4 = math.log(distance4) - d_sigma * d_sigma / 2
+#
+# mean5 = math.exp(s_mu5 + s_sigma * s_sigma / 2)        # 由交通流理论计算车辆间距
+# k5 = km / math.exp(mean5 / max_speed)
+# distance5 = road_length / k5 - car_length
+# d_mu5 = math.log(distance5) - d_sigma * d_sigma / 2
+
+
+# # s_sigma变化引起的d_mu变化，此时s_mu = s_mu3 = 0.75。d_sigma = d_sigma4 = 2
+# s_mu = s_mu3
+# d_sigma = d_sigma4
+#
+# mean1 = math.exp(s_mu + s_sigma1 * s_sigma1 / 2)        # 由交通流理论计算车辆间距
+# k1 = km / math.exp(mean1 / max_speed)
+# distance1 = road_length / k1 - car_length
+# d_mu1 = math.log(distance1) - d_sigma * d_sigma / 2
+#
+# mean2 = math.exp(s_mu + s_sigma2 * s_sigma2 / 2)        # 由交通流理论计算车辆间距
+# k2 = km / math.exp(mean2 / max_speed)
+# distance2 = road_length / k2 - car_length
+# d_mu2 = math.log(distance2) - d_sigma * d_sigma / 2
+#
+# mean3 = math.exp(s_mu + s_sigma3 * s_sigma3 / 2)        # 由交通流理论计算车辆间距
+# k3 = km / math.exp(mean3 / max_speed)
+# distance3 = road_length / k3 - car_length
+# d_mu3 = math.log(distance3) - d_sigma * d_sigma / 2
+#
+# mean4 = math.exp(s_mu + s_sigma4 * s_sigma4 / 2)        # 由交通流理论计算车辆间距
+# k4 = km / math.exp(mean4 / max_speed)
+# distance4 = road_length / k4 - car_length
+# d_mu4 = math.log(distance4) - d_sigma * d_sigma / 2
+
+
+# # s变化引起的d_mu变化
+# d_sigma = d_sigma4
+#
+# log_data1 = get_trunc_lognorm(d_mu1, d_sigma, d_point1, d_point2)
+# plt.hist(log_data1, density=True, bins=100,alpha=0.7)
+# log_data2 = get_trunc_lognorm(d_mu2, d_sigma, d_point1, d_point2)
+# plt.hist(log_data2, density=True, bins=100,alpha=0.7)
+# log_data3 = get_trunc_lognorm(d_mu3, d_sigma, d_point1, d_point2)
+# plt.hist(log_data3, density=True, bins=100,alpha=0.7)
+# log_data4 = get_trunc_lognorm(d_mu4, d_sigma, d_point1, d_point2)
+# plt.hist(log_data4, density=True, bins=100,alpha=0.7)
+# # log_data5 = get_trunc_lognorm(d_mu5, d_sigma, d_point1, d_point2)
+# # plt.hist(log_data5, density=True, bins=100,alpha=0.7)
+# plt.title("distance")
+# plt.show()
+
+
+
+
+
+
+
+
+# # 由d_sigma变化，此时s_mu = s_mu3 = 0.75，s_sigma = s_sigma3 = 0.25
+# s_mu = s_mu3
+# s_sigma = s_sigma4
+#
+# mean1 = math.exp(s_mu + s_sigma * s_sigma / 2)        # 由交通流理论计算车辆间距
+# k1 = km / math.exp(mean1 / max_speed)
+# distance1 = road_length / k1 - car_length
+# d_mu1 = math.log(distance1) - d_sigma1 * d_sigma1 / 2
+#
+# log_data1 = get_trunc_lognorm(d_mu1, d_sigma1, d_point1, d_point2)
+# plt.hist(log_data1, density=True, bins=100,alpha=0.7)
+# log_data2 = get_trunc_lognorm(d_mu1, d_sigma2, d_point1, d_point2)
+# plt.hist(log_data2, density=True, bins=100,alpha=0.7)
+# log_data3 = get_trunc_lognorm(d_mu1, d_sigma3, d_point1, d_point2)
+# plt.hist(log_data3, density=True, bins=100,alpha=0.7)
+# log_data4 = get_trunc_lognorm(d_mu1, d_sigma4, d_point1, d_point2)
+# plt.hist(log_data4, density=True, bins=100,alpha=0.7)
+# plt.title("distance")
+# plt.show()
+
+#
+# # 观测车距
+# s_mu = s_mu3
+# s_sigma = s_sigma4
+#
+# mean1 = math.exp(s_mu + s_sigma * s_sigma / 2)        # 由交通流理论计算车辆间距
+# k1 = km / math.exp(mean1 / max_speed)
+# distance1 = road_length / k1 - car_length
+#
+# log_data1 = trunc_exp_rv(distance1, d_point1, d_point2)
+# plt.hist(log_data1, density=True, bins=100,alpha=0.7)
+# log_data2 = trunc_exp_rv(distance1, d_point1, d_point2)
+# plt.hist(log_data2, density=True, bins=100,alpha=0.7)
+# log_data3 = trunc_exp_rv(distance1, d_point1, d_point2)
+# plt.hist(log_data3, density=True, bins=100,alpha=0.7)
+# log_data4 = trunc_exp_rv(distance1, d_point1, d_point2)
+# plt.hist(log_data4, density=True, bins=100,alpha=0.7)
+# log_data5 = trunc_exp_rv(distance1, d_point1, d_point2)
+# plt.hist(log_data5, density=True, bins=100,alpha=0.7)
+# plt.title("distance")
+# plt.show()
+

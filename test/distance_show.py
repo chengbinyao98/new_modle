@@ -8,10 +8,10 @@ if __name__ == '__main__':
     ann_num = 32
 
     # plt.axis([0, 210, 0, 270])  # 坐标轴范围
-    pos1 = 100
+    pos1 = 0
     pos2 = pos1 + 4
 
-    road_range =20
+    road_range =50
 
     plt.figure(figsize=(40, 3))  # 设置画布大小
 
@@ -88,4 +88,4 @@ if __name__ == '__main__':
 
     plt.plot(act2, SNR2)
 
-
+    plt.show()
