@@ -36,11 +36,11 @@ class Env2(object):
         self.no_interference = 30
 
         # 道路变化量
-        self.s_mu, self.s_sigma = 2.5, 0.25  # 车速分布
-        self.d_sigma = 0.05  # 车辆间距分布
+        self.s_mu, self.s_sigma = 0, 0.25  # 车速分布
+        self.d_sigma = 2  # 车辆间距分布
 
         # 同一个时段不用变化
-        self.s_point1 = 0  # 车速范围
+        self.s_point1 = 0 * 0.277777778  # 车速范围
         self.s_point2 = 20 * 0.277777778
         self.d_point1 = 4  # 车间距范围
         self.d_point2 = 10
@@ -248,7 +248,7 @@ class Env2(object):
         self.cars_speed = []  # 车辆的速度（连续)
         speed = self.log_zhengtai(self.s_mu, self.s_sigma, self.s_point1, self.s_point2)[0]
         for i in range(n):
-            dis = self.log_zhengtai(self.d_mu, self.d_sigma, self.s_point1, self.s_point2)[0]
+            dis = self.log_zhengtai(self.d_mu, self.d_sigma, self.d_point1, self.d_point2)[0]
             if i == 0:
                 self.cars_posit.append(dis)
                 self.cars_speed.append(speed)

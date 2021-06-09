@@ -37,8 +37,8 @@ class Env(object):
         self.no_interference = 30       # 随着天线个数变化
 
         # 道路变化量
-        self.s_mu, self.s_sigma = 2.5, 0.25                                 # 车速分布
-        self.d_sigma = 0.05                                                 # 车辆间距分布
+        self.s_mu, self.s_sigma = 0, 0.25                                 # 车速分布
+        self.d_sigma = 2                                                  # 车辆间距分布
 
         # 同一个时段不用变化
         self.s_point1 = 0                                                   # 车速范围
@@ -77,7 +77,7 @@ class Env(object):
     def road_reset(self):
         speed = self.log_zhengtai(self.s_mu, self.s_sigma, self.s_point1, self.s_point2)[0]
         for i in range(50):  # 任意数目都可以，主要是用于生成路段上的车辆
-            dis = self.log_zhengtai(self.d_mu, self.d_sigma, self.s_point1, self.s_point2)[0]
+            dis = self.log_zhengtai(self.d_mu, self.d_sigma, self.d_point1, self.d_point2)[0]
             # 生成车辆的初始位置和速度
             if i == 0:
                 self.cars_posit.append(dis)
@@ -98,8 +98,8 @@ class Env(object):
     def get_information(self,section):
         for i in range(10):  # 这个10随便，只要保证能新加上所有的车辆即可
             # 生成一个新的车辆进入，初始化车辆间距
-            dis1 = self.log_zhengtai(self.d_mu, self.d_sigma, self.s_point1, self.s_point2)[0]
-            dis2 = self.log_zhengtai(self.d_mu, self.d_sigma, self.s_point1, self.s_point2)[0]
+            dis1 = self.log_zhengtai(self.d_mu, self.d_sigma, self.d_point1, self.d_point2)[0]
+            dis2 = self.log_zhengtai(self.d_mu, self.d_sigma, self.d_point1, self.d_point2)[0]
             if self.cars_posit[0] >= dis1 + dis2:
                 section.insert(0, (self.cars_posit[0] - dis1) / self.road_section)
                 self.cars_posit.insert(0, (self.cars_posit[0] - dis1))  # 车辆的位置（位置更新）

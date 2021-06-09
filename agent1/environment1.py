@@ -35,11 +35,11 @@ class Env1(object):
         self.ann_num = 32                # 天线数目
 
         # 道路变化量
-        self.s_mu, self.s_sigma = 2.5, 0.25                                     # 车速分布
-        self.d_sigma = 0.05                                                     # 车辆间距分布
+        self.s_mu, self.s_sigma = 0, 0.25                                     # 车速分布
+        self.d_sigma = 2                                                     # 车辆间距分布
 
         # 同一个时段不用变化
-        self.s_point1 = 0                                                       # 车速范围
+        self.s_point1 = 0 * 0.277777778                                                       # 车速范围
         self.s_point2 = 20 * 0.277777778
         self.d_point1 = 4                                                       # 车间距范围
         self.d_point2 = 10
@@ -107,7 +107,7 @@ class Env1(object):
     def reset(self):
         # 道路环境初始化
         self.cars_speed = self.log_zhengtai(self.s_mu, self.s_sigma, self.s_point1, self.s_point2)[0]
-        self.cars_posit = self.log_zhengtai(self.d_mu, self.d_sigma, self.s_point1, self.s_point2)[0]
+        self.cars_posit = self.log_zhengtai(self.d_mu, self.d_sigma, self.d_point1, self.d_point2)[0]
         # 形成状态
         a = self.get_section(self.cars_posit)
         state = [a,a]
