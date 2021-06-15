@@ -34,7 +34,7 @@ class Main2(object):
         success = []
 
 
-        for episode in range(1000):
+        for episode in range(10):
             print('episode',episode)
             epi.append(episode)
 
@@ -87,10 +87,10 @@ class Main2(object):
             success.append(total_reward/(self.env.beam_slot*time*self.n))
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
-        plt.savefig("../image_results/main2.png")
+        plt.savefig("image_results/main2.png")
 
 
-if __name__ == '__main__':
+def run():
     g = tf.Graph()
     main = Main2(2,g)
     main.train()

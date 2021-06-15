@@ -61,14 +61,14 @@ class Main1(object):
             success.append(total_reward / (self.env.beam_slot * time))
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
-        plt.savefig("../image_results/main1.png")
+        plt.savefig("image_results/main1.png")
 
     # def restore(self):
     #     self.rl.restore_net()
 
 #
 #
-if __name__ == '__main__':
+def run():
     g = tf.Graph()
     main = Main1(g)
     main.train()
