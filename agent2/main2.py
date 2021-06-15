@@ -34,7 +34,7 @@ class Main2(object):
         success = []
 
 
-        for episode in range(1200):
+        for episode in range(1000):
             print('episode',episode)
             epi.append(episode)
 
@@ -66,7 +66,7 @@ class Main2(object):
                 for dim in range(self.n):
                     action.append(self.env.cars_posit[dim] - self.env.road_range / 2 + add[dim] * self.env.action_section)
 
-                self.draw.piant(self.env.cars_posit, self.env.road_range, ax1, self.env.frame_slot, self.n, action)
+                # self.draw.piant(self.env.cars_posit, self.env.road_range, ax1, self.env.frame_slot, self.n, action)
 
                 state_, reward, done = self.env.step(action,state,self.n)  # dicreward改成一个值
 
@@ -87,7 +87,7 @@ class Main2(object):
             success.append(total_reward/(self.env.beam_slot*time*self.n))
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
-
+        plt.savefig("../image_results/main2.png")
 
 
 if __name__ == '__main__':

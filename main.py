@@ -30,7 +30,8 @@ if __name__ == '__main__':
 
 
     while True:
-        a = input("input:")
+        # a = input("input:")
+        a = '3'
 
         if a == '1':
             main1.train()
@@ -109,4 +110,9 @@ if __name__ == '__main__':
                 plt.plot([i for i in range(len(zongzhou))], zongzhou)
                 plt.pause(env.frame_slot)
 
+            with open('image_results/main.txt', 'w') as f:
+                    f.write("Dic_reward: " + str(dic_reward))
+                    f.write("\n")
+                    f.write('Success_rate: {}'.format(suss/total))
+            plt.savefig("image_results/main.png")
             break

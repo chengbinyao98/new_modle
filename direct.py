@@ -32,7 +32,7 @@ if __name__ == '__main__':
         # main2.rl.restore_net()
 
         dic_state = env.reset(tools)
-        for episodes in range(1000):
+        for episodes in range(10):
             dic_action = {}
             suss = 0
             total = 0
@@ -81,5 +81,9 @@ if __name__ == '__main__':
             ax2.cla()
             plt.plot([i for i in range(len(zongzhou))], zongzhou)
             plt.pause(env.frame_slot)
-
+        with open('image_results/direct.txt', 'w') as f:
+            f.write("Dic_reward: " + str(dic_reward))
+            f.write("\n")
+            f.write('Success_rate: {}'.format(suss / total))
+        plt.savefig("image_results/direct.png")
         break

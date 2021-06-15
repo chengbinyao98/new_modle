@@ -61,6 +61,7 @@ class Main1(object):
             success.append(total_reward / (self.env.beam_slot * time))
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
+        plt.savefig("../image_results/main1.png")
 
     # def restore(self):
     #     self.rl.restore_net()
