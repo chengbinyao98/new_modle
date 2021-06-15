@@ -45,6 +45,18 @@ class Env(object):
         self.s_point2 = 20 * 0.277777778
         self.d_point1 = 4                                                   # 车间距范围
         self.d_point2 = 10
+
+        # 何竞择
+        # 参数配置仅供测试使用
+        import conf
+        self.s_point1 = conf.s_point1                                        # 车速范围
+        self.s_point2 = conf.s_point2
+        self.d_point1 = conf.d_point1                                                       # 车间距范围
+        self.d_point2 = conf.d_point2
+        self.s_mu = conf.s_mu
+        self.s_sigma = conf.s_sigma
+        self.d_sigma = conf.d_sigma
+
         safe_dis = 4  # 安全距离
         km = self.road_length / (self.car_length + safe_dis)                # 由安全距离计算最大车辆密度
         mean = math.exp(self.s_mu + self.s_sigma * self.s_sigma / 2)        # 由交通流理论计算车辆间距
