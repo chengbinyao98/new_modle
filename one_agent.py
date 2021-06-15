@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-if __name__ == '__main__':
+def run():
     env = Env()
     tools = Tools()
     draw = DRAW()
