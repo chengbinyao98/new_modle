@@ -7,3 +7,10 @@ d_point2 = 30
 s_mu = 1.5
 s_sigma = 0.25
 d_sigma = 5
+
+if __name__ == '__main__':
+    import direct, main, one_agent
+    main.run()
+    one_agent.run()
+    direct.run()
+    print("-----------------------------------------")
