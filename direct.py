@@ -32,7 +32,7 @@ if __name__ == '__main__':
         # main2.rl.restore_net()
 
         dic_state = env.reset(tools)
-        for episodes in range(10):
+        for episodes in range(1000):
             dic_action = {}
             suss = 0
             total = 0
