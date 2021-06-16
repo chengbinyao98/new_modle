@@ -1,2 +1,2 @@
-Dic_reward: {1: [[91], [92], [89], [100]]}
-Success_rate: 0.93
+Dic_reward: {1: [[93], [91], [94]]}
+Success_rate: 0.9266666666666666
