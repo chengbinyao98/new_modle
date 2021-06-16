@@ -5,7 +5,7 @@ s_point2 = 60 * 0.2777778
 d_point1 = 30
 d_point2 = 60
 s_mu = 2.5
-s_sigma = 0.01
+s_sigma = 0.02
 d_sigma = 10
 
 if __name__ == '__main__':
