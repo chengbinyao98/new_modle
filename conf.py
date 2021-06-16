@@ -6,7 +6,7 @@ d_point1 = 30
 d_point2 = 60
 s_mu = 2.5
 s_sigma = 0.25
-d_sigma = 0.1
+d_sigma = 10
 
 if __name__ == '__main__':
     import agent1.main1, agent2.main2, direct, main, one_agent
