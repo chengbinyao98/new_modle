@@ -5,8 +5,8 @@ s_point2 = 20 * 0.2777778
 d_point1 = 4
 d_point2 = 10
 s_mu = 0.75
-s_sigma = 0.25
-d_sigma = 0.25
+s_sigma = 0.8
+d_sigma = 0.2
 
 if __name__ == '__main__':
     import agent1.main1, agent2.main2, direct, main, one_agent
