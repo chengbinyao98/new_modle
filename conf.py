@@ -4,7 +4,7 @@ s_point1 = 0 * 0.2777778
 s_point2 = 20 * 0.2777778
 d_point1 = 4
 d_point2 = 10
-s_mu = 0
+s_mu = -1
 s_sigma = 0.25
 d_sigma = 2
 
