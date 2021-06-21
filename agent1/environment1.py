@@ -34,28 +34,30 @@ class Env1(object):
         # 通信变化量
         self.ann_num = 32                # 天线数目
 
-        # 道路变化量
-        self.s_mu, self.s_sigma = 0, 0.25                                     # 车速分布
-        self.d_sigma = 2                                                     # 车辆间距分布
+        # # 道路变化量
+        # self.s_mu, self.s_sigma = 0, 0.25                                     # 车速分布
+        # self.d_sigma = 2                                                     # 车辆间距分布
+        #
+        # # 同一个时段不用变化
+        # self.s_point1 = 0 * 0.277777778                                                       # 车速范围
+        # self.s_point2 = 20 * 0.277777778
+        # self.d_point1 = 4                                                       # 车间距范围
+        # self.d_point2 = 10
 
-        # 同一个时段不用变化
-        self.s_point1 = 0 * 0.277777778                                                       # 车速范围
-        self.s_point2 = 20 * 0.277777778
-        self.d_point1 = 4                                                       # 车间距范围
-        self.d_point2 = 10
 
         # 何竞择
         # 参数配置仅供测试使用
         import conf
-        self.s_point1 = conf.s_point1                                        # 车速范围
+        self.s_point1 = conf.s_point1
         self.s_point2 = conf.s_point2
-        self.d_point1 = conf.d_point1                                                       # 车间距范围
+        self.d_point1 = conf.d_point1
         self.d_point2 = conf.d_point2
         self.s_mu = conf.s_mu
         self.s_sigma = conf.s_sigma
         self.d_sigma = conf.d_sigma
+        safe_dis = self.d_point1  # 安全距离
 
-        safe_dis = 4                                                            # 安全距离
+
         km = self.road_length / (self.car_length + safe_dis)                    # 由安全距离计算最大车辆密度
         mean = math.exp(self.s_mu + self.s_sigma * self.s_sigma / 2)            # 由交通流理论计算车辆间距
         k = km / math.exp(mean / self.max_speed)
