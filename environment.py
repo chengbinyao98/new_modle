@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import MultipleLocator
 from pylab import *
 from scipy import stats
+from mean import Mean
+
 import matplotlib
 import matplotlib.mlab as mlab
 from scipy.stats import norm
@@ -11,6 +13,7 @@ from scipy.stats import norm
 
 class Env(object):
     def __init__(self):
+        m = Mean()
         # 固定量
         # 帧结构
         self.frame_slot = 0.01          # 帧时隙时间长度
@@ -35,34 +38,23 @@ class Env(object):
         # 通信变化量
         self.ann_num = 32               # 天线数目
         self.no_interference = 30       # 随着天线个数变化
+        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2 = m.time1()
 
-        # 道路变化量
-        self.s_mu, self.s_sigma = 0, 0.25                                 # 车速分布
-        self.d_sigma = 2                                                  # 车辆间距分布
-
-        # 同一个时段不用变化
-        self.s_point1 = 0                                                   # 车速范围
-        self.s_point2 = 20 * 0.277777778
-        self.d_point1 = 4                                                   # 车间距范围
-        self.d_point2 = 10
-
-        # 何竞择
-        # 参数配置仅供测试使用
-        import conf
-        self.s_point1 = conf.s_point1                                        # 车速范围
-        self.s_point2 = conf.s_point2
-        self.d_point1 = conf.d_point1                                                       # 车间距范围
-        self.d_point2 = conf.d_point2
-        self.s_mu = conf.s_mu
-        self.s_sigma = conf.s_sigma
-        self.d_sigma = conf.d_sigma
-
-        safe_dis = 4  # 安全距离
-        km = self.road_length / (self.car_length + safe_dis)                # 由安全距离计算最大车辆密度
-        mean = math.exp(self.s_mu + self.s_sigma * self.s_sigma / 2)        # 由交通流理论计算车辆间距
-        k = km / math.exp(mean / self.max_speed)
-        distance = self.road_length / k - self.car_length
-        self.d_mu = math.log(distance) - self.d_sigma * self.d_sigma / 2
+        # # 道路变化量
+        # self.s_mu, self.s_sigma = 0.75, 0.25                                 # 车速分布
+        # self.d_sigma = 2                                                  # 车辆间距分布
+        #
+        # # 同一个时段不用变化
+        # self.s_point1 = 0                                                   # 车速范围
+        # self.s_point2 = 20 * 0.277777778
+        # self.d_point1 = 4                                                   # 车间距范围
+        # self.d_point2 = 10
+        # safe_dis = 4  # 安全距离
+        # km = self.road_length / (self.car_length + safe_dis)                # 由安全距离计算最大车辆密度
+        # mean = math.exp(self.s_mu + self.s_sigma * self.s_sigma / 2)        # 由交通流理论计算车辆间距
+        # k = km / math.exp(mean / self.max_speed)
+        # distance = self.road_length / k - self.car_length
+        # self.d_mu = math.log(distance) - self.d_sigma * self.d_sigma / 2
 
     # 由道路上的所有车辆得到所有车辆的路段
     def get_section(self, list):
@@ -79,11 +71,11 @@ class Env(object):
         log_data = np.exp(norm_data)
         return log_data
 
-    def exp(self, scale, low, high, data_num = 1):  # scale是均值不是lamda，是1/lamda
-        rnd_cdf = np.random.uniform(stats.expon.cdf(x = low, scale = scale),
-                                    stats.expon.cdf(x = high, scale = scale),
-                                    size = data_num)
-        return stats.expon.ppf(q = rnd_cdf, scale = scale)
+    # def exp(self, scale, low, high, data_num = 1):  # scale是均值不是lamda，是1/lamda
+    #     rnd_cdf = np.random.uniform(stats.expon.cdf(x = low, scale = scale),
+    #                                 stats.expon.cdf(x = high, scale = scale),
+    #                                 size = data_num)
+    #     return stats.expon.ppf(q = rnd_cdf, scale = scale)
 
     # 道路初始化
     def road_reset(self):

@@ -2,6 +2,8 @@ import numpy as np
 import math
 from pylab import *
 from scipy import stats
+from mean import Mean
+
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
@@ -10,6 +12,7 @@ from scipy.stats import norm
 
 class Env2(object):
     def __init__(self):
+        m = Mean()
         # 固定量
         # 帧结构
         self.frame_slot = 0.01          # 帧时隙时间长度
@@ -34,9 +37,11 @@ class Env2(object):
         # 通信变化量
         self.ann_num = 32  # 天线数目
         self.no_interference = 30
+        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2 = m.time1()
 
+        #
         # # 道路变化量
-        # self.s_mu, self.s_sigma = 0, 0.25  # 车速分布
+        # self.s_mu, self.s_sigma = 0.75, 0.25  # 车速分布
         # self.d_sigma = 2  # 车辆间距分布
         #
         # # 同一个时段不用变化
@@ -44,32 +49,18 @@ class Env2(object):
         # self.s_point2 = 20 * 0.277777778
         # self.d_point1 = 4  # 车间距范围
         # self.d_point2 = 10
-
-
-        # 何竞择
-        # 参数配置仅供测试使用
-        import conf
-        self.s_point1 = conf.s_point1
-        self.s_point2 = conf.s_point2
-        self.d_point1 = conf.d_point1
-        self.d_point2 = conf.d_point2
-        self.s_mu = conf.s_mu
-        self.s_sigma = conf.s_sigma
-        self.d_sigma = conf.d_sigma
-        safe_dis = self.d_point1  # 安全距离
-
-
-        km = self.road_length / (self.car_length + safe_dis)  # 由安全距离计算最大车辆密度
-        mean = math.exp(self.s_mu + self.s_sigma * self.s_sigma / 2)  # 由交通流理论计算车辆间距
-        k = km / math.exp(mean / self.max_speed)
-        distance = self.road_length / k - self.car_length
-        self.d_mu = math.log(distance) - self.d_sigma * self.d_sigma / 2
-
-        # self.v_min = 8  # 车辆的最小速度
-        # self.v_max = 16  # 车辆的最大速度
-        # self.accelerate = 16            # 车辆的加速度
-        # self.min_dis = 22  # 车辆之间的最小反应距离
-        # self.max_dis = 28
+        # safe_dis = self.d_point1  # 安全距离
+        # km = self.road_length / (self.car_length + safe_dis)  # 由安全距离计算最大车辆密度
+        # mean = math.exp(self.s_mu + self.s_sigma * self.s_sigma / 2)  # 由交通流理论计算车辆间距
+        # k = km / math.exp(mean / self.max_speed)
+        # distance = self.road_length / k - self.car_length
+        # self.d_mu = math.log(distance) - self.d_sigma * self.d_sigma / 2
+        #
+        # # self.v_min = 8  # 车辆的最小速度
+        # # self.v_max = 16  # 车辆的最大速度
+        # # self.accelerate = 16            # 车辆的加速度
+        # # self.min_dis = 22  # 车辆之间的最小反应距离
+        # # self.max_dis = 28
 
     # region 【功能函数】生成截断对数正态分布，要求对数正态在[log_lower,log_upper]
     def log_zhengtai(self, mu, sigma, log_lower, log_upper, data_num = 1):
@@ -79,12 +70,12 @@ class Env2(object):
         norm_data = X.rvs(data_num)
         log_data = np.exp(norm_data)
         return log_data
-
-    def exp(self, scale, low, high, data_num = 1):  # scale是均值不是lamda，是1/lamda
-        rnd_cdf = np.random.uniform(stats.expon.cdf(x = low, scale = scale),
-                                    stats.expon.cdf(x = high, scale = scale),
-                                    size = data_num)
-        return stats.expon.ppf(q = rnd_cdf, scale = scale)
+    #
+    # def exp(self, scale, low, high, data_num = 1):  # scale是均值不是lamda，是1/lamda
+    #     rnd_cdf = np.random.uniform(stats.expon.cdf(x = low, scale = scale),
+    #                                 stats.expon.cdf(x = high, scale = scale),
+    #                                 size = data_num)
+    #     return stats.expon.ppf(q = rnd_cdf, scale = scale)
 
     # 由道路上的所有车辆得到所有车辆的路段
     def get_section(self, list):
@@ -92,85 +83,6 @@ class Env2(object):
         for i in range(len(list)):
             section.append(math.ceil(list[i] / self.road_section))
         return section
-
-    # 道路路面现有车辆更新
-    # def road_step(self):
-    #     mark = 0  # 标记当前车辆是否之前被操作过，保证一个时隙车只跑一个时隙的量
-    #     for i in range(len(self.cars_posit) - 1):
-    #         if mark == 0:
-    #             if self.cars_posit[i + 1] - self.cars_posit[i] < self.sa                                                                       :
-    #                 if np.random.rand() < 0.5:
-    #                     cars_speed_next = self.cars_speed[i] - self.accelerate * self.frame_slot
-    #                     # 减速到最小速度即可
-    #                     if cars_speed_next <= self.v_min:
-    #                         cars_speed_next = self.v_min
-    #                     ti = (self.cars_speed[i] - cars_speed_next) / self.accelerate
-    #                     self.cars_posit[i] = self.cars_speed[i] * ti - ti * ti * self.accelerate / 2 + (
-    #                             self.frame_slot - ti) * cars_speed_next + self.cars_posit[i]
-    #                     self.cars_speed[i] = cars_speed_next
-    #                     mark = 0
-    #                 else:
-    #                     cars_speed_next = self.cars_speed[i + 1] + self.accelerate * self.frame_slot
-    #                     # 减速到最小速度即可
-    #                     if cars_speed_next >= self.v_max:
-    #                         cars_speed_next = self.v_max
-    #                     ti1 = (cars_speed_next - self.cars_speed[i + 1]) / self.accelerate
-    #                     self.cars_posit[i + 1] = self.cars_speed[i + 1] * ti1 + ti1 * ti1 * self.accelerate / 2 + (
-    #                             self.frame_slot - ti1) * cars_speed_next + self.cars_posit[i + 1]
-    #                     self.cars_speed[i + 1] = cars_speed_next
-    #                     self.cars_posit[i] = self.cars_speed[i] * self.frame_slot + self.cars_posit[i]
-    #                     mark = 1
-    #             if self.cars_posit[i + 1] - self.cars_posit[i] > self.max_dis:
-    #                 if np.random.rand() < 0.5:
-    #                     cars_speed_next = self.cars_speed[i+1] - self.accelerate * self.frame_slot
-    #                     # 减速到最小速度即可
-    #                     if cars_speed_next <= self.v_min:
-    #                         cars_speed_next = self.v_min
-    #                     ti1 = (self.cars_speed[i+1] - cars_speed_next) / self.accelerate
-    #                     self.cars_posit[i+1] = self.cars_speed[i+1] * ti1 - ti1 * ti1 * self.accelerate / 2 + (
-    #                             self.frame_slot - ti1) * cars_speed_next + self.cars_posit[i+1]
-    #                     self.cars_speed[i+1] = cars_speed_next
-    #                     self.cars_posit[i] = self.cars_speed[i] * self.frame_slot + self.cars_posit[i]
-    #                     mark = 2
-    #                 else:
-    #                     cars_speed_next = self.cars_speed[i] + self.accelerate * self.frame_slot
-    #                     # 减速到最小速度即可
-    #                     if cars_speed_next >= self.v_max:
-    #                         cars_speed_next = self.v_max
-    #                     ti = (cars_speed_next - self.cars_speed[i]) / self.accelerate
-    #                     self.cars_posit[i] = self.cars_speed[i] * ti + ti * ti * self.accelerate / 2 + (
-    #                             self.frame_slot - ti) * cars_speed_next + self.cars_posit[i]
-    #                     self.cars_speed[i] = cars_speed_next
-    #                     mark = 0
-    #             if self.min_dis < self.cars_posit[i + 1] - self.cars_posit[i] < self.max_dis:
-    #                 self.cars_posit[i] = self.cars_speed[i] * self.frame_slot + self.cars_posit[i]
-    #                 mark = 0
-    #         else:
-    #             if self.cars_posit[i + 1] - self.cars_posit[i] < self.min_dis:
-    #                 cars_speed_next = self.cars_speed[i + 1] + self.accelerate * self.frame_slot
-    #                 # 减速到最小速度即可
-    #                 if cars_speed_next >= self.v_max:
-    #                     cars_speed_next = self.v_max
-    #                 ti1 = (cars_speed_next - self.cars_speed[i + 1]) / self.accelerate
-    #                 self.cars_posit[i + 1] = self.cars_speed[i + 1] * ti1 + ti1 * ti1 * self.accelerate / 2 + (
-    #                         self.frame_slot - ti1) * cars_speed_next + self.cars_posit[i + 1]
-    #                 self.cars_speed[i + 1] = cars_speed_next
-    #                 mark = 1
-    #             if self.cars_posit[i + 1] - self.cars_posit[i] > self.max_dis:
-    #                 cars_speed_next = self.cars_speed[i+1] - self.accelerate * self.frame_slot
-    #                 # 减速到最小速度即可
-    #                 if cars_speed_next <= self.v_min:
-    #                     cars_speed_next = self.v_min
-    #                 ti1 = (self.cars_speed[i+1] - cars_speed_next) / self.accelerate
-    #                 self.cars_posit[i+1] = self.cars_speed[i+1] * ti1 - ti1 * ti1 * self.accelerate / 2 + (
-    #                         self.frame_slot - ti1) * cars_speed_next + self.cars_posit[i+1]
-    #                 self.cars_speed[i+1] = cars_speed_next
-    #                 mark = 2
-    #             if self.min_dis < self.cars_posit[i + 1] - self.cars_posit[i] < self.max_dis:
-    #                 mark = 0
-    #     if mark == 0:
-    #         self.cars_posit[len(self.cars_posit) - 1] = self.cars_speed[len(self.cars_posit) - 1] * self.frame_slot + \
-    #                                                     self.cars_posit[len(self.cars_posit) - 1]
 
     def road_step(self):
         for i in range(len(self.cars_posit)):
