@@ -113,7 +113,7 @@ def run(period, option):
     while not flag:
         g = tf.Graph()
         main = Main2(2,g, period, option)
-        flag = main.train()
+        flag = main.train(factor)
         count += 1
         if count >= 9:
             factor = factor - 0.1
