@@ -32,12 +32,12 @@ class DQN2(object):
 
     def saver_net(self):
         # saver = tf.train.Saver()
-        self.saver.save(self.sess, "data/agent2/agent2")
+        self.saver.save(self.sess, "data/a2")
         # print('already')
 
     def restore_net(self):
         # saver = tf.train.Saver()
-        self.saver.restore(self.sess, 'agent2/data/agent2')
+        self.saver.restore(self.sess, 'data/a2')
 
     def choose_action(self, s):
         self.epsilon = self.epsilon * 0.98

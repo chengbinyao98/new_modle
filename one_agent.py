@@ -14,7 +14,7 @@ def run(period, option):
     draw = DRAW()
 
     g1 = tf.Graph()
-    main1 = Main1(g1)
+    main1 = Main1(g1, period, option)
     #
     # g2 = tf.Graph()
     # main2 = Main2(2, g2)

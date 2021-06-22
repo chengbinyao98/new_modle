@@ -14,10 +14,10 @@ def run(period, option):
     draw = DRAW()
 
     g1 = tf.Graph()
-    main1 = Main1(g1, option)
+    main1 = Main1(g1,period, option)
 
     g2 = tf.Graph()
-    main2 = Main2(2, g2, option)
+    main2 = Main2(2, g2,period, option)
 
     plt.ion()
     # plt.figure(figsize=(100, 5))  # 设置画布大小
@@ -113,5 +113,5 @@ def run(period, option):
 
             from conf_runner import prefx
             file = prefx + "6-22-Results/Period-{}___Condition-{}/".format(period, option)
-            plt.savefig(file + "image/main2.png")
+            plt.savefig(file + "image/main.png")
             break

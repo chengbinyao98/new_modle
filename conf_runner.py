@@ -1,6 +1,7 @@
 import shutil
+import os
 
-prefx = "C:/Users/jingz/Desktop/new_modle/"
+prefx = "C:/Users/Administrator/PycharmProjects/new_modle/"
 
 if __name__ == '__main__':
 
@@ -11,10 +12,11 @@ if __name__ == '__main__':
         print("-----------------------------------------")
         agent2.main2.run(period, option)
         agent1.main1.run(period, option)
-        # main.run(period, option)
-        # one_agent.run(period, option)
-        # direct.run(period, option)
-        # file = prefx + "6-22-Results/Period-{}___Condition-{}/".format(period, option)
-        # model_file = file + "model/"
-        # shutil.move("data", model_file)
+        main.run(period, option)
+        one_agent.run(period, option)
+        direct.run(period, option)
+        file = prefx + "6-22-Results/Period-{}___Condition-{}/".format(period, option)
+        model_file = file + "model/"
+        shutil.move("data", model_file)
+        os.mkdir("data")
         print("-----------------------------------------")
