@@ -66,7 +66,7 @@ class Main2(object):
                 for dim in range(self.n):
                     action.append(self.env.cars_posit[dim] - self.env.road_range / 2 + add[dim] * self.env.action_section)
 
-                self.draw.piant(self.env.cars_posit, self.env.road_range, ax1, self.env.frame_slot, self.n, action)
+                # self.draw.piant(self.env.cars_posit, self.env.road_range, ax1, self.env.frame_slot, self.n, action)
 
                 state_, reward, done = self.env.step(action,state,self.n)  # dicreward改成一个值
 
