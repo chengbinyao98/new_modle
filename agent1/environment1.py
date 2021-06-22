@@ -37,7 +37,7 @@ class Env1(object):
         self.ann_num = 32                # 天线数目
 
         # 道路变化量
-        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2 = m.time2()
+        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2 = m.time3()
 
         # # 车速分布
         # self.d_sigma = 2                                                        # 车辆间距分布
