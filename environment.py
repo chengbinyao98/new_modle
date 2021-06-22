@@ -22,8 +22,8 @@ class Env(object):
         # 车辆和道路
         self.road_length = 200          # 道路长度
         self.straight = 100             # 基站和道路的直线距离
-        self.car_length = 5
-        self.max_speed = 105 * 0.277777778
+        # self.car_length = 5
+        # self.max_speed = 105 * 0.277777778
 
         # 存储单元
         self.cars_posit = []            # 车辆的位置（连续）

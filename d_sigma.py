@@ -9,27 +9,25 @@ class Mean(object):
         self.max_speed = 105 * 0.277777778
 
     def time1(self):
+
+        s_mu = 0.75
+        s_sigma = 0.25
+        d_mu = 1.545
+        d_sigma = 0.05
+
+
+        s_mu = 0.75
+        s_sigma = 0.25
+        d_mu = 1.525
+        d_sigma = 0.1
+
+
+        s_mu = 0.75
+        s_sigma = 0.25
+        d_mu = 1.235
         d_sigma = 0.25
 
-        s_mu = -1
-        s_sigma = 0.25
-        d_mu = 0.01
 
-        # s_mu = 0
-        # s_sigma = 0.25
-        # d_mu = 0.72
-        #
-        # s_mu = 0.75
-        # s_sigma = 0.25
-        # d_mu = 1.22
-        #
-        # s_mu = 1.5
-        # s_sigma = 0.25
-        # d_mu = 1.55
-        #
-        # s_mu = 2.5
-        # s_sigma = 0.25
-        # d_mu = 1.68
 
         s_point1 = 0 * 0.277777778
         s_point2 = 20 * 0.277777778
@@ -49,27 +47,23 @@ class Mean(object):
 
 
     def time2(self):
+
+        s_mu = 2
+        s_sigma = 0.25
+        d_mu = 2.735
+        d_sigma = 0.05
+
+        s_mu = 2
+        s_sigma = 0.25
+        d_mu = 2.73
+        d_sigma = 0.1
+
+        s_mu = 2
+        s_sigma = 0.25
+        d_mu = 2.68
         d_sigma = 0.25
 
-        s_mu = 0.5
-        s_sigma = 0.25
-        d_mu = 2.51
 
-        # s_mu = 1.5
-        # s_sigma = 0.25
-        # d_mu = 2.57
-        #
-        # s_mu = 2
-        # s_sigma = 0.25
-        # d_mu = 2.67
-        #
-        # s_mu = 3
-        # s_sigma = 0.25
-        # d_mu = 2.88
-        #
-        # s_mu = 5
-        # s_sigma = 0.25
-        # d_mu = 2.92
 
         s_point1 = 20 * 0.277777778
         s_point2 = 40 * 0.277777778
@@ -88,27 +82,21 @@ class Mean(object):
         return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2
 
     def time3(self):
-        d_sigma = 0.25
 
-        s_mu = 0.5
+        s_mu = 2.5
         s_sigma = 0.25
-        d_mu = 2.75
+        d_mu = 3.687
+        d_sigma = 0.05
 
-        # s_mu = 1.5
-        # s_sigma = 0.25
-        # d_mu = 3.05
-        #
-        # s_mu = 2.5
-        # s_sigma = 0.25
-        # d_mu = 3.59
-        #
-        # s_mu = 4
-        # s_sigma = 0.25
-        # d_mu = 4.31
-        #
-        # s_mu = 6
-        # s_sigma = 0.25
-        # d_mu = 4.53
+        s_mu = 2.5
+        s_sigma = 0.25
+        d_mu = 3.683
+        d_sigma = 0.1
+
+        s_mu = 2.5
+        s_sigma = 0.25
+        d_mu = 3.59
+        d_sigma = 0.25
 
         s_point1 = 40 * 0.277777778
         s_point2 = 60 * 0.277777778
@@ -142,50 +130,47 @@ class Mean(object):
 #
 # if __name__ == '__main__':
 #     m = Mean()
-#     d_sigma = 0.25
-#     a = 60
-#     b = 100
+#     a = 30
+#     b = 60
 #
-#     d_mu1 = 2.75
-#     d_mu2 = 3.05
+#     d_mu1 = 3.687
+#     d_mu2 = 3.683
 #     d_mu3 = 3.59
-#     d_mu4 = 4.31
-#     d_mu5 = 4.53
+#
+#     d_sigma1 = 0.05
+#     d_sigma2 = 0.1
+#     d_sigma3 = 0.25
 #
 #
-#     m.time1(0.5, 0.25)
 #
-#     data = m.exp(d_mu1,a,b)
+#     m.time1()
+#
+#     data = m.log_zhengtai_mean(d_mu1,d_sigma1, a,b)
 #     print(np.mean(data))
 #     plt.hist(data, density=True, bins=100, alpha=0.7)
 #
 #     print(' ')
-#     m.time1(1.5, 0.25)
+#     m.time1()
 #
-#     data = m.exp(d_mu2, a, b)
+#     data = m.log_zhengtai_mean(d_mu2, d_sigma2,a, b)
 #     print(np.mean(data))
 #     plt.hist(data, density=True, bins=100, alpha=0.7)
 #
 #     print(' ')
-#     m.time1(2.5, 0.25)
+#     m.time1()
 #
-#     data = m.exp(d_mu3, a, b)
+#     data = m.log_zhengtai_mean(d_mu3, d_sigma3,a, b)
 #     print(np.mean(data))
 #     plt.hist(data, density=True, bins=100, alpha=0.7)
 #
-#     print(' ')
-#     m.time1(4, 0.25)
+#     # print(' ')
+#     # m.time1()
+#     #
+#     # data = m.log_zhengtai_mean(d_mu4, d_sigma4,a, b)
+#     # print(np.mean(data))
+#     # plt.hist(data, density=True, bins=100, alpha=0.7)
 #
-#     data = m.exp(d_mu4, a, b)
-#     print(np.mean(data))
-#     plt.hist(data, density=True, bins=100, alpha=0.7)
 #
-#     print(' ')
-#     m.time1(6, 0.25)
-#
-#     data = m.exp(d_mu5, a, b)
-#     print(np.mean(data))
-#     plt.hist(data, density=True, bins=100, alpha=0.7)
 #
 #     plt.show()
 
