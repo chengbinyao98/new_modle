@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def run():
-    env = Env()
+def run(option):
+    env = Env(option)
     tools = Tools()
     draw = DRAW()
 
@@ -106,10 +106,6 @@ def run():
             plt.plot([i for i in range(len(zongzhou))], zongzhou)
             plt.pause(env.frame_slot)
 
-        with open('image_results/one_agent.txt', 'w') as f:
-            f.write("Dic_reward: " + str(dic_reward))
-            f.write("\n")
-            f.write('Success_rate: {}'.format(suss / total))
-        plt.savefig("image_results/one_agent.png")
-
+        from conf_runner import file
+        plt.savefig(file + "image/one_agent.png")
         break

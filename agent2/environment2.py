@@ -2,8 +2,7 @@ import numpy as np
 import math
 from pylab import *
 from scipy import stats
-from mean import Mean
-
+from s_mu import Mean
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
@@ -11,7 +10,7 @@ from scipy.stats import norm
 
 
 class Env2(object):
-    def __init__(self):
+    def __init__(self, option):
         m = Mean()
         # 固定量
         # 帧结构
@@ -37,7 +36,7 @@ class Env2(object):
         # 通信变化量
         self.ann_num = 32  # 天线数目
         self.no_interference = 30
-        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2 = m.time1()
+        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2 = m.time1(option)
 
         #
         # # 道路变化量

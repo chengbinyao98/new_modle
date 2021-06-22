@@ -6,8 +6,8 @@ from agent1.draw1 import DRAW
 import math
 
 class Main1(object):
-    def __init__(self,g):
-        self.env = Env1()
+    def __init__(self,g, option):
+        self.env = Env1(option)
         self.draw = DRAW()
         self.rl = DQN1(
                 gra=g,
@@ -29,7 +29,8 @@ class Main1(object):
         epi = []
         success = []
 
-        for episode in range(1000):
+        for episode in range(20):
+            sf = False
             print('episode', episode)
             epi.append(episode)
 
@@ -61,17 +62,31 @@ class Main1(object):
             success.append(total_reward / (self.env.beam_slot * time))
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
-        plt.savefig("image_results/main1.png")
+
+            if episode >= 10:
+                if not sf:
+                    su_avg = np.mean(success)
+                    if su_avg > 0.7:
+                        sf = True
+                    else:
+                        return False
+        from conf_runner import file
+        plt.savefig(file + "image/main2.png")
+        with open(file + "image/success_rate.txt", "a") as f:
+            f.write("main2: {}\n".format(su_avg))
+        return True
 
     # def restore(self):
     #     self.rl.restore_net()
 
 #
 #
-def run():
-    g = tf.Graph()
-    main = Main1(g)
-    main.train()
+def run(option):
+    flag = False
+    while not flag:
+        g = tf.Graph()
+        main = Main1(g, option)
+        flag = main.train()
 
 
 

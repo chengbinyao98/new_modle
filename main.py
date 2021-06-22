@@ -8,16 +8,16 @@ import matplotlib.pyplot as plt
 import math
 
 
-def run():
-    env = Env()
+def run(option):
+    env = Env(option)
     tools = Tools()
     draw = DRAW()
 
     g1 = tf.Graph()
-    main1 = Main1(g1)
+    main1 = Main1(g1, option)
 
     g2 = tf.Graph()
-    main2 = Main2(2, g2)
+    main2 = Main2(2, g2, option)
 
     plt.ion()
     # plt.figure(figsize=(100, 5))  # 设置画布大小
@@ -110,9 +110,7 @@ def run():
                 plt.plot([i for i in range(len(zongzhou))], zongzhou)
                 plt.pause(env.frame_slot)
 
-            with open('image_results/main.txt', 'w') as f:
-                    f.write("Dic_reward: " + str(dic_reward))
-                    f.write("\n")
-                    f.write('Success_rate: {}'.format(suss/total))
-            plt.savefig("image_results/main.png")
+
+            from conf_runner import file
+            plt.savefig(file + "image/main2.png")
             break
