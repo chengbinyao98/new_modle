@@ -87,9 +87,6 @@ class Main1(object):
 def run(period, option):
     flag = False
     while not flag:
-        import shutil
-        from conf_runner import prefx
-        shutil.rmtree(prefx + "data/agent2")
         g = tf.Graph()
         main = Main1(g, period, option)
         flag = main.train()
