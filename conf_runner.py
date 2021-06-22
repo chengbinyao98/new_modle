@@ -5,9 +5,9 @@ prefx = "C:/Users/Administrator/PycharmProjects/new_modle/"
 
 if __name__ == '__main__':
 
-    for i in range(5):
+    for i in range(3):
         period = 1
-        option = 5 - i
+        option = 3 - i
         import agent1.main1, agent2.main2, direct, main, one_agent
         print("-----------------------------------------")
         agent2.main2.run(period, option)
