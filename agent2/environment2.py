@@ -2,7 +2,7 @@ import numpy as np
 import math
 from pylab import *
 from scipy import stats
-from s_mu import Mean
+from s_sigma import Mean
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab

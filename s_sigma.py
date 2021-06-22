@@ -8,24 +8,24 @@ class Mean(object):
         self.car_length =5
         self.max_speed = 105 * 0.277777778
 
-    def time1(self):
+    def time1(self, option):
         d_sigma = 0.25
-
-        s_mu = 0.75
-        s_sigma = 0.05
-        d_mu = 1.215
-
-        # s_mu = 0.75
-        # s_sigma = 0.1
-        # d_mu = 1.23
-        #
-        # s_mu = 0.75
-        # s_sigma = 0.25
-        # d_mu = 1.24
-        #
-        # s_mu = 0.75
-        # s_sigma = 0.8
-        # d_mu = 1.24
+        if option == 1:
+            s_mu = 0.75
+            s_sigma = 0.05
+            d_mu = 1.215
+        if option == 2:
+            s_mu = 0.75
+            s_sigma = 0.1
+            d_mu = 1.23
+        if option == 3:
+            s_mu = 0.75
+            s_sigma = 0.25
+            d_mu = 1.24
+        if option == 4:
+            s_mu = 0.75
+            s_sigma = 0.8
+            d_mu = 1.24
 
 
         s_point1 = 0 * 0.277777778
@@ -45,24 +45,24 @@ class Mean(object):
         return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2
 
 
-    def time2(self):
+    def time2(self, option):
         d_sigma = 0.25
-
-        s_mu = 2
-        s_sigma = 0.02
-        d_mu = 2.649
-
-        # s_mu = 2
-        # s_sigma = 0.05
-        # d_mu = 2.649
-        #
-        # s_mu = 2
-        # s_sigma = 0.1
-        # d_mu = 2.657
-        #
-        # s_mu = 2
-        # s_sigma = 0.25
-        # d_mu = 2.678
+        if option == 1:
+            s_mu = 2
+            s_sigma = 0.02
+            d_mu = 2.649
+        if option == 2:
+            s_mu = 2
+            s_sigma = 0.05
+            d_mu = 2.649
+        if option == 3:
+            s_mu = 2
+            s_sigma = 0.1
+            d_mu = 2.657
+        if option == 4:
+            s_mu = 2
+            s_sigma = 0.25
+            d_mu = 2.678
 
 
         s_point1 = 20 * 0.277777778
