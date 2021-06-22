@@ -94,7 +94,7 @@ class Main2(object):
             if episode >= 30:
                 if not sf:
                     su_avg = np.mean(success)
-                    if su_avg > 0.5:
+                    if su_avg > 0.6:
                         sf = True
                     else:
                         return False
