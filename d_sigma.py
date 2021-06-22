@@ -3,29 +3,30 @@ from pylab import *
 from scipy import stats
 
 class Mean(object):
-    def __init__(self):
+    def __init__(self, option):
         self.road_length = 200
         self.car_length =5
         self.max_speed = 105 * 0.277777778
+        self.option = option
 
     def time1(self):
+        if self.option == 1:
+            s_mu = 0.75
+            s_sigma = 0.25
+            d_mu = 1.545
+            d_sigma = 0.05
 
-        s_mu = 0.75
-        s_sigma = 0.25
-        d_mu = 1.545
-        d_sigma = 0.05
+        if self.option == 2:
+            s_mu = 0.75
+            s_sigma = 0.25
+            d_mu = 1.525
+            d_sigma = 0.1
 
-
-        s_mu = 0.75
-        s_sigma = 0.25
-        d_mu = 1.525
-        d_sigma = 0.1
-
-
-        s_mu = 0.75
-        s_sigma = 0.25
-        d_mu = 1.235
-        d_sigma = 0.25
+        if self.option == 3:
+            s_mu = 0.75
+            s_sigma = 0.25
+            d_mu = 1.235
+            d_sigma = 0.25
 
 
 
@@ -47,21 +48,21 @@ class Mean(object):
 
 
     def time2(self):
-
-        s_mu = 2
-        s_sigma = 0.25
-        d_mu = 2.735
-        d_sigma = 0.05
-
-        s_mu = 2
-        s_sigma = 0.25
-        d_mu = 2.73
-        d_sigma = 0.1
-
-        s_mu = 2
-        s_sigma = 0.25
-        d_mu = 2.68
-        d_sigma = 0.25
+        if self.option == 1:
+            s_mu = 2
+            s_sigma = 0.25
+            d_mu = 2.735
+            d_sigma = 0.05
+        if self.option == 2:
+            s_mu = 2
+            s_sigma = 0.25
+            d_mu = 2.73
+            d_sigma = 0.1
+        if self.option == 3:
+            s_mu = 2
+            s_sigma = 0.25
+            d_mu = 2.68
+            d_sigma = 0.25
 
 
 
@@ -82,21 +83,21 @@ class Mean(object):
         return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2
 
     def time3(self):
-
-        s_mu = 2.5
-        s_sigma = 0.25
-        d_mu = 3.687
-        d_sigma = 0.05
-
-        s_mu = 2.5
-        s_sigma = 0.25
-        d_mu = 3.683
-        d_sigma = 0.1
-
-        s_mu = 2.5
-        s_sigma = 0.25
-        d_mu = 3.59
-        d_sigma = 0.25
+        if self.option == 1:
+            s_mu = 2.5
+            s_sigma = 0.25
+            d_mu = 3.687
+            d_sigma = 0.05
+        if self.option == 2:
+            s_mu = 2.5
+            s_sigma = 0.25
+            d_mu = 3.683
+            d_sigma = 0.1
+        if self.option == 3:
+            s_mu = 2.5
+            s_sigma = 0.25
+            d_mu = 3.59
+            d_sigma = 0.25
 
         s_point1 = 40 * 0.277777778
         s_point2 = 60 * 0.277777778

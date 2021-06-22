@@ -22,7 +22,7 @@ class Main1(object):
                 replace_target_iter=300
                 )
 
-    def train(self):
+    def train(self, factor):
         plt.ion()
         plt.figure(figsize=(100, 5))  # 设置画布大小
         ax1 = plt.subplot(211)
@@ -68,7 +68,7 @@ class Main1(object):
             if episode >= 30:
                 if not sf:
                     su_avg = np.mean(success)
-                    if su_avg > 0.85:
+                    if su_avg > factor:
                         sf = True
                     else:
                         return False
@@ -86,10 +86,16 @@ class Main1(object):
 #
 def run(period, option):
     flag = False
+    count = 0
+    factor = 0.9
     while not flag:
         g = tf.Graph()
         main = Main1(g, period, option)
-        flag = main.train()
+        flag = main.train(factor)
+        count += 1
+        if count >= 9:
+            factor = factor - 0.1
+            count = 0
 
 
 
