@@ -37,7 +37,7 @@ class Env(object):
         # 通信变化量
         self.ann_num = 32               # 天线数目
         self.no_interference = 30       # 随着天线个数变化
-        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2 = m.time1()
+        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2 = m.time2()
 
         # # 道路变化量
         # self.s_mu, self.s_sigma = 0.75, 0.25                                 # 车速分布
