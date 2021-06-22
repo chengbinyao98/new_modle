@@ -3,30 +3,31 @@ from pylab import *
 from scipy import stats
 
 class Mean(object):
-    def __init__(self):
+    def __init__(self, option):
         self.road_length = 200
         self.car_length =5
         self.max_speed = 105 * 0.277777778
+        self.option = option
 
-    def time1(self, option):
+    def time1(self):
         d_sigma = 0.25
-        if option == 1:
+        if self.option == 1:
             s_mu = -1
             s_sigma = 0.25
             d_mu = 0.01
-        if option == 2:
+        if self.option == 2:
             s_mu = 0
             s_sigma = 0.25
             d_mu = 0.72
-        if option == 3:
+        if self.option == 3:
             s_mu = 0.75
             s_sigma = 0.25
             d_mu = 1.22
-        if option == 4:
+        if self.option == 4:
             s_mu = 1.5
             s_sigma = 0.25
             d_mu = 1.55
-        if option == 5:
+        if self.option == 5:
             s_mu = 2.5
             s_sigma = 0.25
             d_mu = 1.68
@@ -48,25 +49,25 @@ class Mean(object):
         return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2
 
 
-    def time2(self, option):
+    def time2(self):
         d_sigma = 0.25
-        if option == 1:
+        if self.option == 1:
             s_mu = 0.5
             s_sigma = 0.25
             d_mu = 2.51
-        if option == 2:
+        if self.option == 2:
             s_mu = 1.5
             s_sigma = 0.25
             d_mu = 2.57
-        if option == 3:
+        if self.option == 3:
             s_mu = 2
             s_sigma = 0.25
             d_mu = 2.67
-        if option == 4:
+        if self.option == 4:
             s_mu = 3
             s_sigma = 0.25
             d_mu = 2.88
-        if option == 5:
+        if self.option == 5:
             s_mu = 5
             s_sigma = 0.25
             d_mu = 2.92
@@ -87,25 +88,25 @@ class Mean(object):
 
         return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2
 
-    def time3(self, option):
+    def time3(self):
         d_sigma = 0.25
-        if option == 1:
+        if self.option == 1:
             s_mu = 0.5
             s_sigma = 0.25
             d_mu = 2.75
-        if option == 2:
+        if self.option == 2:
             s_mu = 1.5
             s_sigma = 0.25
             d_mu = 3.05
-        if option == 3:
+        if self.option == 3:
             s_mu = 2.5
             s_sigma = 0.25
             d_mu = 3.59
-        if option == 4:
+        if self.option == 4:
             s_mu = 4
             s_sigma = 0.25
             d_mu = 4.31
-        if option == 5:
+        if self.option == 5:
             s_mu = 6
             s_sigma = 0.25
             d_mu = 4.53
