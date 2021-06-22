@@ -9,7 +9,7 @@ from agent2.draw2 import DRAW
 class Main2(object):
     def __init__(self, n, g, period, option):
         self.period = period
-        self.optino = option
+        self.option = option
         self.n = n
         self.env = Env2(option)
         self.tools = Tools()
@@ -35,9 +35,9 @@ class Main2(object):
         epi = []
         success = []
 
-
-        for episode in range(1000):
-            sf = False
+        sf = False
+        su_avg = 0
+        for episode in range(15):
             print('episode',episode)
             epi.append(episode)
 
@@ -91,7 +91,7 @@ class Main2(object):
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
 
-            if episode >= 50:
+            if episode >= 3:
                 if not sf:
                     su_avg = np.mean(success)
                     if su_avg > 0.5:
@@ -109,6 +109,14 @@ class Main2(object):
 def run(period, option):
     flag = False
     while not flag:
+        import os.path
+        import shutil
+        from pathlib import Path
+        from conf_runner import prefx
+        file_name = Path(prefx + "data/agent2")
+        if file_name.is_dir():
+            shutil.rmtree(file_name)
+            print("fail, remove")
         g = tf.Graph()
         main = Main2(2,g, period, option)
         flag = main.train()

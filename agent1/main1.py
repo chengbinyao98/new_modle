@@ -30,9 +30,9 @@ class Main1(object):
         # reward图
         epi = []
         success = []
-
+        sf = False
+        su_avg = 0
         for episode in range(1000):
-            sf = False
             print('episode', episode)
             epi.append(episode)
 
@@ -65,7 +65,7 @@ class Main1(object):
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
 
-            if episode >= 50:
+            if episode >= 30:
                 if not sf:
                     su_avg = np.mean(success)
                     if su_avg > 0.8:
@@ -74,9 +74,9 @@ class Main1(object):
                         return False
         from conf_runner import prefx
         file = prefx + "6-22-Results/Period-{}___Condition-{}/".format(self.period, self.option)
-        plt.savefig(file + "image/main2.png")
+        plt.savefig(file + "image/main1.png")
         with open(file + "image/success_rate.txt", "a") as f:
-            f.write("main2: {}\n".format(su_avg))
+            f.write("main1: {}\n".format(su_avg))
         return True
 
     # def restore(self):
@@ -87,6 +87,9 @@ class Main1(object):
 def run(period, option):
     flag = False
     while not flag:
+        import shutil
+        from conf_runner import prefx
+        shutil.rmtree(prefx + "data/agent2")
         g = tf.Graph()
         main = Main1(g, period, option)
         flag = main.train()

@@ -30,7 +30,7 @@ class DQN1(object):
 
     def saver_net(self):
         # saver = tf.train.Saver()
-        self.saver.save(self.sess, "data/agent1")
+        self.saver.save(self.sess, "data/agent1/agent1")
         # print('already')
 
     def restore_net(self):
