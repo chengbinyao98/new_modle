@@ -34,7 +34,7 @@ class Main2(object):
         success = []
 
 
-        for episode in range(20):
+        for episode in range(1000):
             sf = False
             print('episode',episode)
             epi.append(episode)
@@ -89,10 +89,10 @@ class Main2(object):
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
 
-            if episode >= 10:
+            if episode >= 50:
                 if not sf:
                     su_avg = np.mean(success)
-                    if su_avg > 0.4:
+                    if su_avg > 0.55:
                         sf = True
                     else:
                         return False
