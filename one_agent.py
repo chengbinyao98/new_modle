@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def run(option):
+def run(period, option):
     env = Env(option)
     tools = Tools()
     draw = DRAW()
@@ -106,6 +106,7 @@ def run(option):
             plt.plot([i for i in range(len(zongzhou))], zongzhou)
             plt.pause(env.frame_slot)
 
-        from conf_runner import file
+        from conf_runner import prefx
+        file = prefx + "6-22-Results/Period-{}___Condition-{}/".format(period, option)
         plt.savefig(file + "image/one_agent.png")
         break

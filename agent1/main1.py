@@ -6,7 +6,9 @@ from agent1.draw1 import DRAW
 import math
 
 class Main1(object):
-    def __init__(self,g, option):
+    def __init__(self,g, period, option):
+        self.period = period
+        self.option = option
         self.env = Env1(option)
         self.draw = DRAW()
         self.rl = DQN1(
@@ -66,11 +68,12 @@ class Main1(object):
             if episode >= 50:
                 if not sf:
                     su_avg = np.mean(success)
-                    if su_avg > 0.85:
+                    if su_avg > 0.8:
                         sf = True
                     else:
                         return False
-        from conf_runner import file
+        from conf_runner import prefx
+        file = prefx + "6-22-Results/Period-{}___Condition-{}/".format(self.period, self.option)
         plt.savefig(file + "image/main2.png")
         with open(file + "image/success_rate.txt", "a") as f:
             f.write("main2: {}\n".format(su_avg))
@@ -81,11 +84,11 @@ class Main1(object):
 
 #
 #
-def run(option):
+def run(period, option):
     flag = False
     while not flag:
         g = tf.Graph()
-        main = Main1(g, option)
+        main = Main1(g, period, option)
         flag = main.train()
 
 
