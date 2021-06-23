@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import MultipleLocator
 from pylab import *
 from scipy import stats
-from s_mu import Mean
+from d_sigma import Mean
 import matplotlib
 import matplotlib.mlab as mlab
 from scipy.stats import norm
