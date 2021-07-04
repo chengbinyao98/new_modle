@@ -2,7 +2,7 @@ import numpy as np
 import math
 from pylab import *
 from scipy import stats
-from mean import Mean
+from s_mu import Mean
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -15,14 +15,12 @@ class Env2(object):
         m = Mean()
         # 固定量
         # 帧结构
-        self.frame_slot = 0.01          # 帧时隙时间长度
-        self.beam_slot = 100            # 波束选择时隙数
-        self.right = 5                  # 正确传输最低的SNR
+        self.frame_slot = 0.01  # 帧时隙时间长度
+        self.beam_slot = 100  # 波束选择时隙数
+        self.right = 5  # 正确传输最低的SNR
         # 车辆和道路
-        self.road_length = 200          # 道路长度
-        self.straight = 100             # 基站和道路的直线距离
-        # self.car_length = 5
-        # self.max_speed = 105 * 0.277777778
+        self.road_length = 200  # 道路长度
+        self.straight = 100  # 基站和道路的直线距离
 
         # 存储单元
         self.cars_posit = []  # 车辆的位置（连续）
@@ -36,31 +34,17 @@ class Env2(object):
 
         # 通信变化量
         self.ann_num = 32  # 天线数目
-        self.no_interference = 30
-        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2 = m.time1()
+        self.no_interference = 30  # 随着天线个数变化
+        self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2, \
+        self.safe_dis, self.near_dis, self.far_dis, self.target_dis, \
+        self.mean_speed, \
+        self.car_num = m.time()
 
-        #
-        # # 道路变化量
-        # self.s_mu, self.s_sigma = 0.75, 0.25  # 车速分布
-        # self.d_sigma = 2  # 车辆间距分布
-        #
-        # # 同一个时段不用变化
-        # self.s_point1 = 0 * 0.277777778  # 车速范围
-        # self.s_point2 = 20 * 0.277777778
-        # self.d_point1 = 4  # 车间距范围
-        # self.d_point2 = 10
-        # safe_dis = self.d_point1  # 安全距离
-        # km = self.road_length / (self.car_length + safe_dis)  # 由安全距离计算最大车辆密度
-        # mean = math.exp(self.s_mu + self.s_sigma * self.s_sigma / 2)  # 由交通流理论计算车辆间距
-        # k = km / math.exp(mean / self.max_speed)
-        # distance = self.road_length / k - self.car_length
-        # self.d_mu = math.log(distance) - self.d_sigma * self.d_sigma / 2
-        #
-        # # self.v_min = 8  # 车辆的最小速度
-        # # self.v_max = 16  # 车辆的最大速度
-        # # self.accelerate = 16            # 车辆的加速度
-        # # self.min_dis = 22  # 车辆之间的最小反应距离
-        # # self.max_dis = 28
+        self.batch_size = self.car_num - 1
+        # self.seq_batch = []
+        # self.res_batch = []
+
+        # self.no_num_change = 3
 
     # region 【功能函数】生成截断对数正态分布，要求对数正态在[log_lower,log_upper]
     def log_zhengtai(self, mu, sigma, log_lower, log_upper, data_num = 1):
@@ -70,35 +54,37 @@ class Env2(object):
         norm_data = X.rvs(data_num)
         log_data = np.exp(norm_data)
         return log_data
-    #
-    # def exp(self, scale, low, high, data_num = 1):  # scale是均值不是lamda，是1/lamda
-    #     rnd_cdf = np.random.uniform(stats.expon.cdf(x = low, scale = scale),
-    #                                 stats.expon.cdf(x = high, scale = scale),
-    #                                 size = data_num)
-    #     return stats.expon.ppf(q = rnd_cdf, scale = scale)
-
-    # 由道路上的所有车辆得到所有车辆的路段
-    def get_section(self, list):
-        section = []
-        for i in range(len(list)):
-            section.append(math.ceil(list[i] / self.road_section))
-        return section
 
     def road_step(self):
+        count = 1 / 2
         for i in range(len(self.cars_posit)):
-            self.cars_posit[i] = self.cars_speed[i] * self.frame_slot + self.cars_posit[i]
+            if i != len(self.cars_posit) - 1:
+                if self.cars_posit[i + 1] - self.cars_posit[i] <= self.near_dis:
+                    self.cars_posit[i] = self.cars_posit[i + 1] - self.safe_dis - (
+                                self.cars_posit[i + 1] - self.safe_dis - self.cars_posit[i]) / 2
+                    self.cars_speed[i] = self.cars_speed[i + 1]
+                if self.cars_posit[i + 1] - self.cars_posit[i] >= self.far_dis:
+                    self.cars_posit[i] = self.cars_posit[i + 1] - self.target_dis - (
+                                self.cars_posit[i + 1] - self.target_dis - self.cars_posit[i]) / 2
+                    self.cars_speed[i] = self.mean_speed + np.random.uniform(-0.5, 0.5)
+                if self.near_dis < self.cars_posit[i + 1] - self.cars_posit[i] < self.far_dis:
+                    self.cars_posit[i] = self.cars_speed[i] * self.frame_slot + self.cars_posit[i]
+            else:
+                self.cars_posit[i] = self.cars_speed[i] * self.frame_slot + self.cars_posit[i]
+                # self.cars_posit[i] = self.cars_speed[i] * self.frame_slot + self.frame_slot * self.frame_slot * add / 2 + self.cars_posit[i]
+                # self.cars_speed[i] = min(self.cars_speed[i] + add * self.frame_slot, self.max_speed)
 
-    def get_reward(self, act,reward,n):
-        if self.cars_posit[1] - self.cars_posit[0] <= self.no_interference:
+    def get_reward(self, act,pos,reward,n):
+        if pos[1] - pos[0] <= self.no_interference:
             for i in range(n):
                 SNR_noise = 0
                 SNR = 0
                 for j in range(n):
                     # 直角边
-                    a = abs(self.road_length / 2 - self.cars_posit[i])
+                    a = abs(self.road_length / 2 - pos[i])
                     # 斜边
                     b = np.sqrt(np.square(a) + np.square(self.straight))
-                    if self.cars_posit[i] > self.road_length / 2:
+                    if pos[i] > self.road_length / 2:
                         th1 = math.pi - math.acos(a / b)
                     else:
                         th1 = math.acos(a / b)
@@ -135,10 +121,10 @@ class Env2(object):
 
         else:
             for i in range(n):
-                a = abs(self.road_length / 2 - self.cars_posit[i])
+                a = abs(self.road_length / 2 - pos[i])
                 # 斜边
                 b = np.sqrt(np.square(a) + np.square(self.straight))
-                if self.cars_posit[i] > self.road_length / 2:
+                if pos[i] > self.road_length / 2:
                     th1 = math.pi - math.acos(a / b)
                 else:
                     th1 = math.acos(a / b)
@@ -169,45 +155,54 @@ class Env2(object):
         return reward
 
     def reset(self,n):
-        # 道路环境初始化
-        self.cars_posit = []  # 车辆的位置（连续）
-        self.cars_speed = []  # 车辆的速度（连续)
-        speed = self.log_zhengtai(self.s_mu, self.s_sigma, self.s_point1, self.s_point2)[0]
-        for i in range(n):
+        self.cars_posit = []
+        self.cars_speed = []
+        for i in range(2):  # 任意数目都可以，主要是用于生成路段上的车辆
+            speed = self.log_zhengtai(self.s_mu, self.s_sigma, self.s_point1, self.s_point2)[0]
             dis = self.log_zhengtai(self.d_mu, self.d_sigma, self.d_point1, self.d_point2)[0]
+            # 生成车辆的初始位置和速度
             if i == 0:
                 self.cars_posit.append(dis)
                 self.cars_speed.append(speed)
             else:
-                self.cars_posit.append(self.cars_posit[i-1]+dis)
+                y = self.cars_posit[i - 1] + dis
+                self.cars_posit.append(y)
                 self.cars_speed.append(speed)
+        # print(self.cars_speed)
+        # print(self.cars_posit)
 
-        a = self.get_section(self.cars_posit)
+        a = [self.cars_posit[0],self.cars_posit[1]]
 
-        state = []
-        for i in range(n):
-            state.append([a[i],a[i]])
-        return state
-
-    def step(self, action, state, n):
-        reward = [0 for p in range(n)]
+        fake = []
         for i in range(self.beam_slot):
             self.road_step()
-            reward = self.get_reward(action, reward, n)
+            fake.append([self.cars_posit[0],self.cars_posit[1]])
 
-        add_reward = 0
-        for i in range(n):
-            add_reward += reward[i]
+        state = [a[0], a[1], self.cars_posit[0], self.cars_posit[1]]
 
-        now = self.get_section(self.cars_posit)
-        state_ = []
-        for i in range(n):
-            state_.append([now[i],state[i][0]])
+        return state, fake
 
-        if self.cars_posit[n-1] > self.road_length:
+    def step(self, action, fake, n):
+        # 道路的（位置更新）
+        reward = [0 for p in range(n)]
+        fake2 = []
+        for i in range(self.beam_slot):  # 标记当前车辆是否之前被操作过，保证一个时隙车只跑一个时隙的量
+            reward = self.get_reward(action, fake[i], reward, 2)
+            self.road_step()
+            fake2.append([self.cars_posit[0],self.cars_posit[1]])
+
+        state_ = [fake[self.beam_slot - 1][0], fake[self.beam_slot - 1][1], self.cars_posit[0], self.cars_posit[1]]
+
+        if fake[self.beam_slot - 1][1] > self.road_length:
             done = 1
         else:
             done = 0
 
-        return state_,add_reward,done
+        total_reward = 0
+        for i in range(len(reward)):
+            total_reward += reward[i]
+
+        return state_, total_reward, done, fake2
+
+
 

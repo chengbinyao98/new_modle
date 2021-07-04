@@ -42,7 +42,7 @@ if __name__ == '__main__':
             main1.rl.restore_net()
             main2.rl.restore_net()
 
-            dic_state = env.reset(tools)
+            dic_state, fake = env.reset(tools)
             for episodes in range(1000):
                 dic_action = {}
                 suss = 0
@@ -56,7 +56,7 @@ if __name__ == '__main__':
                         for num in range(len(dic_state[1])):
                             temp_state = tools.get_list(dic_state[1][num])  # 车组中所有车辆状态合成
                             temp = main1.rl.real_choose_action(temp_state)  # 学习到车组的动作组合
-                            dic_action[1].append([env.cars_posit[dic_state[1][num][0][2]] - env.road_range / 2 + temp * env.action_section])
+                            dic_action[1].append([dic_state[1][num][0][0] - env.road_range / 2 + temp * env.action_section])
 
                     if x == 2:
                         for num in range(len(dic_state[2])):
@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
                             action = []
                             for dim in range(2):
-                                action.append(env.cars_posit[dic_state[2][num][dim][2]] - env.road_range / 2 + add[dim] * env.action_section)
+                                action.append(dic_state[2][num][dim][0] - env.road_range / 2 + add[dim] * env.action_section)
                             dic_action[2].append(action)
 
                 # draw_action = [0 for l in range(len(env.cars_posit))]
@@ -88,8 +88,9 @@ if __name__ == '__main__':
                 #             draw_action[dic_state[x][num][dim][2]] = dic_action[x][num][dim]
                 # draw.piant(env.cars_posit,env.road_range,ax1,env.frame_slot,draw_action)
 
-                dic_state_, dic_reward = env.step(dic_action, tools)
+                dic_state_, dic_reward, fake2 = env.step(dic_action, fake, tools)
                 print(dic_reward)
+
 
                 for x in dic_reward:
                     for num in range(len(dic_reward[x])):
@@ -99,6 +100,7 @@ if __name__ == '__main__':
                 print('成功率',suss/total)
 
                 dic_state = dic_state_
+                fake = fake2
 
                 success += suss
                 totally += total

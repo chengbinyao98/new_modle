@@ -41,13 +41,12 @@ class Main2(object):
             total_reward = 0
             time = 0
 
-            state = self.env.reset(self.n)
+            state,fake = self.env.reset(self.n)
 
             while True:
 
-                temp_state = self.tools.get_list(state)  # 车组中所有车辆状态合成
-                add_action = self.rl.choose_action(np.array(temp_state))    # 学习到车组的动作组合
-                add_action1 = self.rl.choose_action(np.array(temp_state))    # 学习到车组的动作组合
+                add_action = self.rl.choose_action(np.array(state))    # 学习到车组的动作组合
+                add_action1 = self.rl.choose_action(np.array(state))    # 学习到车组的动作组合
 
                 # 车组动作组合转换成车辆的单个动作增量
                 add = []
@@ -63,21 +62,20 @@ class Main2(object):
 
                 # 转换成车辆的单个动作
                 action = []
-                for dim in range(self.n):
-                    action.append(self.env.cars_posit[dim] - self.env.road_range / 2 + add[dim] * self.env.action_section)
+                for dim in range(2):
+                    action.append(state[dim] - self.env.road_range / 2 + add[dim] * self.env.action_section)
 
-                # self.draw.piant(self.env.cars_posit, self.env.road_range, ax1, self.env.frame_slot, self.n, action)
+                # self.draw.piant(fake[0], self.env.road_range, ax1, self.env.frame_slot, self.n, action)
 
-                state_, reward, done = self.env.step(action,state,self.n)  # dicreward改成一个值
+                state_, reward, done, fake2 = self.env.step(action,fake,self.n)  # dicreward改成一个值
 
-                l_temp_state = self.tools.get_list(state)
-                l_temp_state_ = self.tools.get_list(state_)
-                self.rl.store_transition_and_learn(l_temp_state, add_action, reward, l_temp_state_, done)
+                self.rl.store_transition_and_learn(state, add_action, reward, state_, done)
 
                 total_reward += reward
                 time += 1
 
                 state = state_
+                fake = fake2
                 if done:
                     self.rl.saver_net()
                     break

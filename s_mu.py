@@ -5,129 +5,70 @@ from scipy import stats
 class Mean(object):
     def __init__(self):
         self.road_length = 200
-        self.car_length =5
-        self.max_speed = 105 * 0.277777778
+        self.car_length = 5
+        self.max_speed = 75 * 0.277777778
 
-    def time1(self):
-        d_sigma = 0.25
-
-        s_mu = -1
-        s_sigma = 0.25
-        d_mu = 0.01
-
-        # s_mu = 0
-        # s_sigma = 0.25
-        # d_mu = 0.72
-        #
-        # s_mu = 0.75
-        # s_sigma = 0.25
-        # d_mu = 1.22
-        #
-        # s_mu = 1.5
-        # s_sigma = 0.25
-        # d_mu = 1.55
-        #
-        # s_mu = 2.5
-        # s_sigma = 0.25
-        # d_mu = 1.68
-
-        s_point1 = 0 * 0.277777778
-        s_point2 = 20 * 0.277777778
-        d_point1 = 4
-        d_point2 = 10
-
-        safe_dis = d_point1  # 安全距离
-        km = self.road_length / (self.car_length + safe_dis)  # 由安全距离计算最大车辆密度
-
-        data = self.log_zhengtai_mean(s_mu, s_sigma, s_point1, s_point2)
-        mean = np.mean(data)
-
-        k = km / math.exp(mean / self.max_speed)
-        distance = self.road_length / k - self.car_length
-
-        return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2
-
-
-    def time2(self):
+    def time(self):
         d_sigma = 0.25
 
         s_mu = 0.5
         s_sigma = 0.25
-        d_mu = 2.51
+        d_mu = 2.63
+        near_dis_plus = 1
+        far_dis = 33  #36.6
+        target_dis = 19
 
         # s_mu = 1.5
         # s_sigma = 0.25
-        # d_mu = 2.57
-        #
+        # d_mu = 2.68
+        # near_dis_plus = 2
+        # far_dis = 33   #36.7
+        # target_dis = 20
+
+
         # s_mu = 2
         # s_sigma = 0.25
-        # d_mu = 2.67
-        #
+        # d_mu = 2.76
+        # near_dis_plus = 3
+        # far_dis = 35  # 41
+        # target_dis = 21
+
+
         # s_mu = 3
         # s_sigma = 0.25
-        # d_mu = 2.88
-        #
+        # d_mu = 3.08
+        # near_dis_plus = 5
+        # far_dis = 42  # 52.33
+        # target_dis = 35
+
         # s_mu = 5
         # s_sigma = 0.25
-        # d_mu = 2.92
+        # d_mu = 3.65
+        # near_dis_plus = 6
+        # far_dis = 75  #  108
+        # target_dis = 55
 
         s_point1 = 20 * 0.277777778
         s_point2 = 40 * 0.277777778
-        d_point1 = 10
-        d_point2 = 30
-
-        safe_dis = d_point1  # 安全距离
-        km = self.road_length / (self.car_length + safe_dis)  # 由安全距离计算最大车辆密度
+        safe_dis_fig = 10
 
         data = self.log_zhengtai_mean(s_mu, s_sigma, s_point1, s_point2)
         mean = np.mean(data)
-
-        k = km * (1 - mean / self.max_speed)
-        distance = self.road_length / k - self.car_length
-
-        return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2
-
-    def time3(self):
-        d_sigma = 0.25
-
-        s_mu = 0.5
-        s_sigma = 0.25
-        d_mu = 2.75
-
-        # s_mu = 1.5
-        # s_sigma = 0.25
-        # d_mu = 3.05
-        #
-        # s_mu = 2.5
-        # s_sigma = 0.25
-        # d_mu = 3.59
-        #
-        # s_mu = 4
-        # s_sigma = 0.25
-        # d_mu = 4.31
-        #
-        # s_mu = 6
-        # s_sigma = 0.25
-        # d_mu = 4.53
-
-        s_point1 = 40 * 0.277777778
-        s_point2 = 60 * 0.277777778
-        d_point1 = 30
-        d_point2 = 60
-
-        safe_dis = d_point1  # 安全距离
+        min_speed = np.min(data)
+        safe_dis = min_speed / 0.277777778 - safe_dis_fig  # 安全距离
+        near_dis = safe_dis + near_dis_plus
         km = self.road_length / (self.car_length + safe_dis)  # 由安全距离计算最大车辆密度
+        k = km / math.exp(mean / self.max_speed)
+        # distance = self.road_length / k - self.car_length
+        d_point1 = safe_dis
+        d_point2 = 100000
 
-        data = self.log_zhengtai_mean(s_mu, s_sigma, s_point1, s_point2)
-        mean = np.mean(data)
+        data_dis = self.log_zhengtai_mean(d_mu, d_sigma, d_point1, d_point2)
 
-        k = km * (-1) *math.log(mean/self.max_speed)
-        distance = self.road_length / k - self.car_length
+        return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2, safe_dis, near_dis, far_dis, target_dis, mean, int(math.ceil(k))
+        # return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2, safe_dis, near_dis, far_dis, target_dis, mean, 2
 
-        return s_mu, s_sigma, d_mu, d_sigma, s_point1, s_point2, d_point1, d_point2
-
-
-
+        # return d_point1, d_point2
 
     def log_zhengtai_mean(self, mu, sigma, log_lower, log_upper, data_num=10000):
         norm_lower = np.log(log_lower)
@@ -137,55 +78,48 @@ class Mean(object):
         log_data = np.exp(norm_data)
         return log_data
 
-
-
-#
 # if __name__ == '__main__':
 #     m = Mean()
 #     d_sigma = 0.25
-#     a = 60
-#     b = 100
 #
-#     d_mu1 = 2.75
-#     d_mu2 = 3.05
-#     d_mu3 = 3.59
-#     d_mu4 = 4.31
-#     d_mu5 = 4.53
+#     d_mu1 = 2.63
+#     d_mu2 = 2.68
+#     d_mu3 = 2.76
+#     d_mu4 = 3.08
+#     d_mu5 = 3.65
 #
 #
-#     m.time1(0.5, 0.25)
+#     a ,b =m.time()
 #
-#     data = m.exp(d_mu1,a,b)
-#     print(np.mean(data))
-#     plt.hist(data, density=True, bins=100, alpha=0.7)
-#
+#     data1 = m.log_zhengtai_mean(d_mu1,0.25,a,b)
+#     print(np.mean(data1))
+#     print('max', np.max(data1))
+#     plt.hist(data1, density=True, bins=100, alpha=0.7)
 #     print(' ')
-#     m.time1(1.5, 0.25)
 #
-#     data = m.exp(d_mu2, a, b)
-#     print(np.mean(data))
-#     plt.hist(data, density=True, bins=100, alpha=0.7)
-#
+#     data2 = m.log_zhengtai_mean(d_mu2, 0.25, a, b)
+#     print(np.mean(data2))
+#     print('max', np.max(data2))
+#     plt.hist(data2, density=True, bins=100, alpha=0.7)
 #     print(' ')
-#     m.time1(2.5, 0.25)
 #
-#     data = m.exp(d_mu3, a, b)
-#     print(np.mean(data))
-#     plt.hist(data, density=True, bins=100, alpha=0.7)
-#
+#     data3 = m.log_zhengtai_mean(d_mu3, 0.25, a, b)
+#     print(np.mean(data3))
+#     print('max', np.max(data3))
+#     plt.hist(data3, density=True, bins=100, alpha=0.7)
 #     print(' ')
-#     m.time1(4, 0.25)
 #
-#     data = m.exp(d_mu4, a, b)
-#     print(np.mean(data))
-#     plt.hist(data, density=True, bins=100, alpha=0.7)
-#
+#     data4 = m.log_zhengtai_mean(d_mu4, 0.25, a, b)
+#     print(np.mean(data4))
+#     print('max', np.max(data4))
+#     plt.hist(data4, density=True, bins=100, alpha=0.7)
 #     print(' ')
-#     m.time1(6, 0.25)
 #
-#     data = m.exp(d_mu5, a, b)
-#     print(np.mean(data))
-#     plt.hist(data, density=True, bins=100, alpha=0.7)
+#     data5 = m.log_zhengtai_mean(d_mu5, 0.25, a, b)
+#     print(np.mean(data5))
+#     print('max', np.max(data5))
+#     plt.hist(data5, density=True, bins=100, alpha=0.7)
+#     print(' ')
 #
 #     plt.show()
-
+#

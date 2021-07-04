@@ -33,22 +33,24 @@ class Main1(object):
             print('episode', episode)
             epi.append(episode)
 
-            state = self.env.reset()
+            state, fake = self.env.reset()
 
             total_reward = 0
             time = 0
 
             while True:
                 add_action = self.rl.choose_action(np.array(state))  # 学习到车组的动作组合
-                action = self.env.cars_posit - self.env.road_range / 2 + add_action * self.env.action_section
+                action = state[0] - self.env.road_range / 2 + add_action * self.env.action_section
 
-                # self.draw.piant(self.env.cars_posit, self.env.road_range, ax1, self.env.frame_slot, action)
+                # self.draw.piant(state[0], self.env.road_range, ax1, self.env.frame_slot, action)
 
-                state_, reward, done = self.env.step(action, state)  # dicreward改成一个值
+                state_, reward, done, fake2 = self.env.step(action, fake)  # dicreward改成一个值
+                # print(state, action,reward)
 
                 self.rl.store_transition_and_learn(state, add_action, reward, state_, done)
 
                 state = state_
+                fake = fake2
                 total_reward += reward
                 time += 1
                 if done:

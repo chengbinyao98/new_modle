@@ -83,16 +83,15 @@ class Tools(object):
                     a[info[i][0]][info[i][1]][info[i][2]] = list_one[i]
         return a
 
-    def integrate(self,dic_a,dic_b,dic_c):
+    def integrate(self,dic_a,dic_b):
         a = {}
         for x in dic_a:
             if x not in a:
-                a[x] = [[[0 for m in range(3)] for p in range(len(dic_a[x][0]))] for q in range(len(dic_a[x]))]
+                a[x] = [[[0 for m in range(2)] for p in range(len(dic_a[x][0]))] for q in range(len(dic_a[x]))]
             for i in range(len(dic_a[x])):
                 for j in range(len(dic_a[x][i])):
                     a[x][i][j][0] = dic_a[x][i][j]
                     a[x][i][j][1] = dic_b[x][i][j]
-                    a[x][i][j][2] = dic_c[x][i][j]
         return a
 
 

@@ -136,14 +136,14 @@ d_sigma4 = 10
 s_mu = s_mu3
 d_sigma = d_sigma4
 
-log_data1 = get_trunc_lognorm(s_mu, s_sigma1, s_point1, s_point2)
+log_data1 = get_trunc_lognorm(2.5, 0.25, 40* 0.277777778, 60* 0.277777778)
 plt.hist(log_data1, density=True, bins=100,alpha=0.7)
-log_data2 = get_trunc_lognorm(s_mu, s_sigma2, s_point1, s_point2)
-plt.hist(log_data2, density=True, bins=100,alpha=0.7)
-log_data3 = get_trunc_lognorm(s_mu, s_sigma3, s_point1, s_point2)
-plt.hist(log_data3, density=True, bins=100,alpha=0.7)
-log_data4 = get_trunc_lognorm(s_mu, s_sigma4, s_point1, s_point2)
-plt.hist(log_data4, density=True, bins=100,alpha=0.7)
+# log_data2 = get_trunc_lognorm(s_mu, s_sigma2, s_point1, s_point2)
+# plt.hist(log_data2, density=True, bins=100,alpha=0.7)
+# log_data3 = get_trunc_lognorm(s_mu, s_sigma3, s_point1, s_point2)
+# plt.hist(log_data3, density=True, bins=100,alpha=0.7)
+# log_data4 = get_trunc_lognorm(s_mu, s_sigma4, s_point1, s_point2)
+# plt.hist(log_data4, density=True, bins=100,alpha=0.7)
 plt.title("speed")
 plt.show()
 
