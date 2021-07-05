@@ -2,9 +2,19 @@
 import os
 import shutil
 
+# TODO 修改这里的confname即可，其他都不用动
+conf_name = "s_mu"
+if conf_name == "s_mu":
+    from s_mu import Mean
+    size = 5
+if conf_name == "s_sigma":
+    from s_sigma import Mean
+    size = 4
+if conf_name == "d_sigma":
+    from d_sigma import Mean
+    size = 3
 
-
-for i in range(5):
+for i in range(size):
     # 参数选择！！！！！！！！！！
     if not os.path.exists("data"):
         os.mkdir("data")
@@ -13,16 +23,9 @@ for i in range(5):
         os.mkdir("Result")
 
     op = i + 1
-    conf_name = "s_mu"
-    if conf_name == "s_mu":
-        from s_mu import Mean
-    if conf_name == "s_sigma":
-        from s_sigma import Mean
-    if conf_name == "d_sigma":
-        from d_sigma import Mean
 
     # 指定路径
-    prefx = "C:/Users/Administrator/PycharmProjects/new_modle/"
+    prefx = "C:/Users/Administrator/PycharmProjects/new_modle/Result/"
     m = Mean(op)
     # 选择三种配置中的哪一种，以及其中的第几组数据。
 
