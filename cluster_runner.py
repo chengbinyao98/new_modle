@@ -3,7 +3,7 @@ import os
 import shutil
 
 # TODO 修改这里的confname即可，其他都不用动
-conf_name = "s_mu"
+conf_name = "d_sigma"
 if conf_name == "s_mu":
     from s_mu import Mean
     size = 5
