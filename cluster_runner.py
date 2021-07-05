@@ -22,7 +22,7 @@ for i in range(5):
         from d_sigma import Mean
 
     # 指定路径
-    prefx = "C:/Users/jingz/Desktop/new_modle(新环境）/Result/"
+    prefx = "C:/Users/Administrator/PycharmProjects/new_modle/"
     m = Mean(op)
     # 选择三种配置中的哪一种，以及其中的第几组数据。
 
