@@ -3,50 +3,54 @@ from pylab import *
 from scipy import stats
 
 class Mean(object):
-    def __init__(self):
+    def __init__(self, op):
         self.road_length = 200
         self.car_length = 5
         self.max_speed = 75 * 0.277777778
+        self.op = op
 
     def time(self):
         d_sigma = 0.25
 
-        s_mu = 0.5
-        s_sigma = 0.25
-        d_mu = 2.63
-        near_dis_plus = 1
-        far_dis = 33  #36.6
-        target_dis = 19
+        if self.op == 1:
+            s_mu = 0.5
+            s_sigma = 0.25
+            d_mu = 2.63
+            near_dis_plus = 1
+            far_dis = 33  #36.6
+            target_dis = 19
 
-        # s_mu = 1.5
-        # s_sigma = 0.25
-        # d_mu = 2.68
-        # near_dis_plus = 2
-        # far_dis = 33   #36.7
-        # target_dis = 20
+        if self.op == 2:
+            s_mu = 1.5
+            s_sigma = 0.25
+            d_mu = 2.68
+            near_dis_plus = 2
+            far_dis = 33   #36.7
+            target_dis = 20
 
+        if self.op == 3:
+            s_mu = 2
+            s_sigma = 0.25
+            d_mu = 2.76
+            near_dis_plus = 3
+            far_dis = 35  # 41
+            target_dis = 21
 
-        # s_mu = 2
-        # s_sigma = 0.25
-        # d_mu = 2.76
-        # near_dis_plus = 3
-        # far_dis = 35  # 41
-        # target_dis = 21
+        if self.op == 4:
+            s_mu = 3
+            s_sigma = 0.25
+            d_mu = 3.08
+            near_dis_plus = 5
+            far_dis = 42  # 52.33
+            target_dis = 35
 
-
-        # s_mu = 3
-        # s_sigma = 0.25
-        # d_mu = 3.08
-        # near_dis_plus = 5
-        # far_dis = 42  # 52.33
-        # target_dis = 35
-
-        # s_mu = 5
-        # s_sigma = 0.25
-        # d_mu = 3.65
-        # near_dis_plus = 6
-        # far_dis = 75  #  108
-        # target_dis = 55
+        if self.op == 5:
+            s_mu = 5
+            s_sigma = 0.25
+            d_mu = 3.65
+            near_dis_plus = 6
+            far_dis = 75  #  108
+            target_dis = 55
 
         s_point1 = 20 * 0.277777778
         s_point2 = 40 * 0.277777778

@@ -31,6 +31,7 @@ if __name__ == '__main__':
 
     while True:
         a = input("input:")
+        a = 3
 
         if a == '1':
             main1.train()

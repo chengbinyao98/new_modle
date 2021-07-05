@@ -4,37 +4,39 @@ from pylab import *
 from scipy import stats
 
 class Mean(object):
-    def __init__(self):
+    def __init__(self, op):
         self.road_length = 200
         self.car_length = 5
         self.max_speed = 75 * 0.277777778
+        self.op = op
 
     def time(self):
+        if self.op == 1:
+            s_mu = 2
+            s_sigma = 0.02
+            d_mu = 3.13
+            d_sigma = 0.05
+            near_dis_plus = 1
+            far_dis = 28
+            target_dis = 25
 
-        s_mu = 2
-        s_sigma = 0.02
-        d_mu = 3.13
-        d_sigma = 0.05
-        near_dis_plus = 1
-        far_dis = 28
-        target_dis = 25
+        if self.op == 2:
+            s_mu = 2
+            s_sigma = 0.02
+            d_mu = 3.13
+            d_sigma = 0.1
+            near_dis_plus = 1
+            far_dis = 32
+            target_dis = 28
 
-        # s_mu = 2
-        # s_sigma = 0.02
-        # d_mu = 3.13
-        # d_sigma = 0.1
-        # near_dis_plus = 1
-        # far_dis = 32
-        # target_dis = 28
-
-
-        # s_mu = 2
-        # s_sigma = 0.02
-        # d_mu = 3.13
-        # d_sigma = 0.25
-        # near_dis_plus = 0.5
-        # far_dis = 57
-        # target_dis = 38
+        if self.op == 3:
+            s_mu = 2
+            s_sigma = 0.02
+            d_mu = 3.13
+            d_sigma = 0.25
+            near_dis_plus = 0.5
+            far_dis = 57
+            target_dis = 38
 
 
 

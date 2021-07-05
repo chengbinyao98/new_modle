@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\agent2\environment2.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\agent2\main2.py">
           <value>
             <Attribute>
