@@ -4,7 +4,7 @@ import shutil
 
 
 
-for i in range(5):
+for i in range(1,5):
     # 参数选择！！！！！！！！！！
     if not os.path.exists("data"):
         os.mkdir("data")
@@ -31,8 +31,9 @@ for i in range(5):
     import agent1.main1, agent2.main2, direct, main, one_agent
 
     print("-----------------------------------------")
-    agent2.main2.run()
-    agent1.main1.run()
+    if op != 2:
+        agent2.main2.run()
+        agent1.main1.run()
     main.run()
     one_agent.run()
     direct.run()
