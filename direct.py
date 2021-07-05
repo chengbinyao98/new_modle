@@ -72,6 +72,7 @@ def run():
             print('成功率',suss/total)
 
             dic_state = dic_state_
+            fake = fake2
 
             success += suss
             totally += total
