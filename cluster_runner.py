@@ -3,7 +3,7 @@ import os
 import shutil
 
 # TODO 修改这里的confname即可，其他都不用动
-conf_name = "s_mu"
+conf_name = "d_sigma"
 if conf_name == "s_mu":
     from s_mu import Mean
     size = 5
@@ -14,7 +14,7 @@ if conf_name == "d_sigma":
     from d_sigma import Mean
     size = 3
 
-for i in range(size):
+for i in range(1,size):
     # 参数选择！！！！！！！！！！
     if not os.path.exists("data"):
         os.mkdir("data")
@@ -34,9 +34,11 @@ for i in range(size):
     import agent1.main1, agent2.main2, direct, main, one_agent
 
     print("-----------------------------------------")
-    agent2.main2.run()
-    agent1.main1.run()
-    main.run()
+
+    if op != 2:
+        agent2.main2.run()
+        agent1.main1.run()
+        main.run()
     one_agent.run()
     direct.run()
 
