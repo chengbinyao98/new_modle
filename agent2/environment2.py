@@ -29,11 +29,11 @@ class Env2(object):
         # 变化量
         # 算法变化量
         self.road_section = 2  # 每几米划分成一个路段
-        self.action_section = 5  # 每几米划分成一个路段
-        self.road_range = 35  # 动作可以选择的范围
+        self.action_section = 1  # 每几米划分成一个路段
+        self.road_range = 20  # 动作可以选择的范围
 
         # 通信变化量
-        self.ann_num = 32  # 天线数目
+        self.ann_num = 64  # 天线数目
         self.no_interference = 30  # 随着天线个数变化
         self.s_mu, self.s_sigma, self.d_mu, self.d_sigma, self.s_point1, self.s_point2, self.d_point1, self.d_point2, \
         self.safe_dis, self.near_dis, self.far_dis, self.target_dis, \
