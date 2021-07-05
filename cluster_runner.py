@@ -11,9 +11,9 @@ m = Mean(1)
 if __name__ == '__main__':
     import agent1.main1, agent2.main2, direct, main, one_agent
     print("-----------------------------------------")
-    # agent2.main2.run()
+    agent2.main2.run()
     agent1.main1.run()
-    # main.run()
-    # one_agent.run()
-    # direct.run()
+    main.run()
+    one_agent.run()
+    direct.run()
     print("-----------------------------------------")

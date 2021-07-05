@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import math
 
 
-if __name__ == '__main__':
+def run():
     env = Env()
     tools = Tools()
     draw = DRAW()
@@ -30,8 +30,8 @@ if __name__ == '__main__':
 
 
     while True:
-        a = input("input:")
-        a = 3
+        # a = input("input:")
+        a = '3'
 
         if a == '1':
             main1.train()
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             main2.rl.restore_net()
 
             dic_state, fake = env.reset(tools)
-            for episodes in range(1000):
+            for episodes in range(13):
                 dic_action = {}
                 suss = 0
                 total = 0

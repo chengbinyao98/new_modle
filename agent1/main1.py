@@ -29,7 +29,7 @@ class Main1(object):
         epi = []
         success = []
 
-        for episode in range(1000):
+        for episode in range(3):
             print('episode', episode)
             epi.append(episode)
 
@@ -63,13 +63,14 @@ class Main1(object):
             success.append(total_reward / (self.env.beam_slot * time))
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
+        plt.close()
 
     # def restore(self):
     #     self.rl.restore_net()
 
 #
 #
-if __name__ == '__main__':
+def run():
     g = tf.Graph()
     main = Main1(g)
     main.train()

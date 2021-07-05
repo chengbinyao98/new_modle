@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-if __name__ == '__main__':
+def run():
     env = Env()
     tools = Tools()
     draw = DRAW()
@@ -32,7 +32,7 @@ if __name__ == '__main__':
         # main2.rl.restore_net()
 
         dic_state = env.reset(tools)
-        for episodes in range(1000):
+        for episodes in range(3):
             dic_action = {}
             suss = 0
             total = 0
