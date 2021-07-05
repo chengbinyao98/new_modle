@@ -4,7 +4,7 @@ import shutil
 
 
 
-for i in range(5):
+for i in range(1,3):
     # 参数选择！！！！！！！！！！
     if not os.path.exists("data"):
         os.mkdir("data")
@@ -13,7 +13,7 @@ for i in range(5):
         os.mkdir("Result")
 
     op = i + 1
-    conf_name = "s_mu"
+    conf_name = "d_sigma"
     if conf_name == "s_mu":
         from s_mu import Mean
     if conf_name == "s_sigma":
@@ -31,11 +31,14 @@ for i in range(5):
     import agent1.main1, agent2.main2, direct, main, one_agent
 
     print("-----------------------------------------")
-    agent2.main2.run()
-    agent1.main1.run()
-    main.run()
-    one_agent.run()
-    direct.run()
+    if op == 2:
+        direct.run()
+    else:
+        agent2.main2.run()
+        agent1.main1.run()
+        main.run()
+        one_agent.run()
+        direct.run()
 
     # 处理模型文件
     model_file = prefx + fname + "/model/"
