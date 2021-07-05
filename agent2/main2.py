@@ -110,14 +110,14 @@ class Main2(object):
 def run():
     flag = False
     count = 0
-    factor = 0.6
+    factor = 0.7
     while not flag:
         g = tf.Graph()
         main = Main2(2,g)
         flag = main.train(factor)
         count += 1
         if count >= 9:
-            factor = factor - 0.1
+            factor = factor - 0.05
             count = 0
 
 

@@ -167,7 +167,7 @@ class Env1(object):
         # 变化量
         # 算法变化量
         self.road_section = 2           # 每几米划分成一个路段
-        self.action_section = 1         # 每几米划分成一个路段
+        self.action_section = 2         # 每几米划分成一个路段
         self.road_range = 35            # 动作可以选择的范围
 
         # 通信变化量
