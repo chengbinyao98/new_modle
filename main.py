@@ -44,7 +44,7 @@ def run():
             main2.rl.restore_net()
 
             dic_state, fake = env.reset(tools)
-            for episodes in range(13):
+            for episodes in range(1000):
                 dic_action = {}
                 suss = 0
                 total = 0
@@ -112,4 +112,13 @@ def run():
                 plt.plot([i for i in range(len(zongzhou))], zongzhou)
                 plt.pause(env.frame_slot)
 
+            from cluster_runner import prefx, fname
+            file = prefx + fname + "/image/"
+            import os
+            if not os.path.exists(file):
+                os.mkdir(file)
+            plt.savefig(file + "main.png")
+            with open(file + "success_rate.txt", "a") as f:
+                f.write("main: {}\n".format(suss/total))
+            plt.close()
             break

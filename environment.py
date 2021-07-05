@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import MultipleLocator
 from pylab import *
 from scipy import stats
-from cluster_runner import m
+
 
 import matplotlib
 import matplotlib.mlab as mlab
@@ -13,6 +13,7 @@ from scipy.stats import norm
 
 class Env(object):
     def __init__(self):
+        from cluster_runner import m
         # 固定量
         # 帧结构
         self.frame_slot = 0.01  # 帧时隙时间长度

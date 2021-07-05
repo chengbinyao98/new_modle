@@ -2,7 +2,7 @@ import numpy as np
 import math
 from pylab import *
 from scipy import stats
-from cluster_runner import m
+
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -12,6 +12,7 @@ from scipy.stats import norm
 
 class Env2(object):
     def __init__(self):
+        from cluster_runner import m
         # 固定量
         # 帧结构
         self.frame_slot = 0.01  # 帧时隙时间长度

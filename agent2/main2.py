@@ -23,7 +23,7 @@ class Main2(object):
             replace_target_iter=300
         )
 
-    def train(self):
+    def train(self, factor):
         # 画图
         plt.ion()
         plt.figure(figsize=(100, 5))    # 设置画布大小
@@ -32,9 +32,10 @@ class Main2(object):
         # reward图
         epi = []
         success = []
+        sf = False
 
 
-        for episode in range(3):
+        for episode in range(1000):
             print('episode',episode)
             epi.append(episode)
 
@@ -84,13 +85,40 @@ class Main2(object):
             success.append(total_reward/(self.env.beam_slot*time*self.n))
             plt.plot(epi, success)
             plt.pause(self.env.frame_slot)
+
+            if episode >= 50:
+                if not sf:
+                    su_avg = np.mean(success)
+                    if su_avg > factor:
+                        sf = True
+                    else:
+                        return False
+        from cluster_runner import prefx, fname
+        file = prefx + fname + "/image/"
+        import os
+        if not os.path.exists(prefx + fname):
+            os.mkdir(prefx + fname)
+        if not os.path.exists(file):
+            os.mkdir(file)
+        plt.savefig(file + "main2.png")
+        with open(file + "success_rate.txt", "a") as f:
+            f.write("main2: {}\n".format(su_avg))
         plt.close()
+        return True
 
 
 def run():
-    g = tf.Graph()
-    main = Main2(2,g)
-    main.train()
+    flag = False
+    count = 0
+    factor = 0.6
+    while not flag:
+        g = tf.Graph()
+        main = Main2(2,g)
+        flag = main.train(factor)
+        count += 1
+        if count >= 9:
+            factor = factor - 0.1
+            count = 0
 
 
 

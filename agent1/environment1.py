@@ -142,7 +142,6 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import MultipleLocator
 from pylab import *
 from scipy import stats
-from cluster_runner import m
 
 import matplotlib
 import matplotlib.mlab as mlab
@@ -153,6 +152,7 @@ class Env1(object):
     def __init__(self):
         # 固定量
         # 帧结构
+        from cluster_runner import m
         self.frame_slot = 0.01          # 帧时隙时间长度
         self.beam_slot = 100            # 波束选择时隙数
         self.right = 5                  # 正确传输最低的SNR
